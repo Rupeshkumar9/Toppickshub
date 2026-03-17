@@ -1,0 +1,152 @@
+[
+  {
+    "id": "headphones-01",
+    "title": "Premium Wireless Noise-Cancelling Headphones",
+    "category": "Audio",
+    "image":
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
+    "price": 299.99,
+    "originalPrice": 349.99,
+    "rating": 4.5,
+    "reviews": 2847,
+    "badge": "Best Seller",
+    "badgeClass": "",
+    "description":
+      "Experience studio-quality sound with industry-leading noise cancellation. These premium wireless headphones deliver deep bass, crystal-clear highs, and up to 30 hours of battery life. Perfect for commuting, working, or simply losing yourself in music.",
+    "features": [
+      "Active Noise Cancellation (ANC) with Transparency Mode",
+      "30-hour battery life with quick charge (10 min = 3 hrs)",
+      "Premium memory-foam ear cushions for all-day comfort",
+      "Multipoint Bluetooth 5.3 — connect 2 devices simultaneously",
+      "Built-in microphone with AI-powered voice clarity",
+      "Foldable design with premium carry case included"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-16"
+  },
+  {
+    "id": "smartwatch-02",
+    "title": "Smart Fitness Watch — GPS & Heart Rate Monitor",
+    "category": "Wearables",
+    "image":
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
+    "price": 199.99,
+    "originalPrice": 249.99,
+    "rating": 5.0,
+    "reviews": 5312,
+    "badge": "Trending",
+    "badgeClass": "trending",
+    "description":
+      "Track your fitness goals with precision. This advanced smartwatch features built-in GPS, continuous heart rate monitoring, SpO2 tracking, and 100+ workout modes. With a stunning always-on AMOLED display and 14-day battery life, it's the perfect companion for an active lifestyle.",
+    "features": [
+      "Built-in GPS with route mapping and pace tracking",
+      "24/7 heart rate & SpO2 blood oxygen monitoring",
+      "100+ workout modes including swimming (5ATM waterproof)",
+      "1.43 AMOLED always-on display — 466×466 resolution",
+      "14-day battery life with magnetic fast charging",
+      "Smart notifications, calls, and music control from your wrist"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-15"
+  },
+  {
+    "id": "speaker-03",
+    "title": "Waterproof Portable Bluetooth Speaker",
+    "category": "Audio",
+    "image":
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80",
+    "price": 79.99,
+    "originalPrice": 99.99,
+    "rating": 4.0,
+    "reviews": 1209,
+    "badge": "",
+    "badgeClass": "",
+    "description":
+      "Take your music anywhere with this rugged waterproof Bluetooth speaker. Delivering 360° immersive sound with deep bass, it's built to withstand splashes, dust, and drops. Perfect for pool parties, camping trips, or backyard hangouts.",
+    "features": [
+      "IP67 waterproof and dustproof — survives submersion",
+      "360° omnidirectional sound with passive bass radiator",
+      "20-hour playtime on a single charge",
+      "Bluetooth 5.3 with 30m wireless range",
+      "Stereo pairing — connect two speakers for stereo sound",
+      "Built-in microphone for hands-free calls"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-14"
+  },
+  {
+    "id": "keyboard-04",
+    "title": "RGB Mechanical Gaming Keyboard — Cherry MX",
+    "category": "Gaming",
+    "image":
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80",
+    "price": 129.99,
+    "originalPrice": 159.99,
+    "rating": 4.5,
+    "reviews": 3420,
+    "badge": "🔥 Hot",
+    "badgeClass": "hot",
+    "description":
+      "Dominate your games with this premium mechanical keyboard featuring genuine Cherry MX switches. Per-key RGB lighting, aircraft-grade aluminum frame, and N-key rollover ensure every keystroke counts. Built for competitive gamers and power typists alike.",
+    "features": [
+      "Genuine Cherry MX Red switches — 50M keystroke lifespan",
+      "Per-key RGB with 16.8 million colors and dynamic effects",
+      "Aircraft-grade aluminum top plate for durability",
+      "Full N-key rollover and anti-ghosting",
+      "Detachable USB-C braided cable",
+      "Dedicated media controls and magnetic wrist rest"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-13"
+  },
+  {
+    "id": "backpack-05",
+    "title": "Anti-Theft Travel Laptop Backpack — USB Charging",
+    "category": "Travel",
+    "image":
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",
+    "price": 49.99,
+    "originalPrice": 69.99,
+    "rating": 4.0,
+    "reviews": 987,
+    "badge": "",
+    "badgeClass": "",
+    "description":
+      "Travel smart with this anti-theft laptop backpack designed for the modern commuter. Featuring a hidden zipper design, built-in USB charging port, and a padded compartment fitting laptops up to 15.6', it keeps your gear safe and organized on the go.",
+    "features": [
+      "Anti-theft hidden zipper and RFID-blocking pocket",
+      "Built-in USB charging port with internal cable routing",
+      "Fits laptops up to 15.6 with padded compartment",
+      "Water-resistant Oxford fabric exterior",
+      "Ergonomic padded shoulder straps with luggage strap",
+      "Multiple compartments — 15+ organized pockets"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-12"
+  },
+  {
+    "id": "charger-06",
+    "title": "15W Fast Wireless Charging Pad — Qi Compatible",
+    "category": "Accessories",
+    "image":
+      "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&q=80",
+    "price": 24.99,
+    "originalPrice": 39.99,
+    "rating": 5.0,
+    "reviews": 4102,
+    "badge": "Editor's Choice",
+    "badgeClass": "",
+    "description":
+      "Cut the cord with this sleek 15W fast wireless charging pad. Compatible with all Qi-enabled devices, it features intelligent temperature control, foreign object detection, and a slim profile that looks great on any desk or nightstand.",
+    "features": [
+      "15W fast charge for Samsung, 7.5W optimized for iPhone",
+      "Universal Qi compatibility — works with all Qi devices",
+      "Intelligent safety: over-charge, over-heat, and foreign object detection",
+      "Ultra-slim design (only 7mm thick) with LED indicator",
+      "Non-slip silicone surface and anti-slip rubber ring",
+      "Includes USB-C cable and 18W Quick Charge adapter"
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-02-11"
+  }
+]
