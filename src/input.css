@@ -1,0 +1,754 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS (Tailwind v4 @theme)
+   ============================================ */
+@theme {
+    --color-bg-primary: #0a0a0f;
+    --color-bg-secondary: #12121a;
+    --color-bg-card: rgba(255, 255, 255, 0.04);
+    --color-bg-card-hover: rgba(255, 255, 255, 0.07);
+    --color-accent-purple: #8b5cf6;
+    --color-accent-blue: #3b82f6;
+    --color-accent-cyan: #06b6d4;
+    --color-accent-orange: #f97316;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-border-glass: rgba(255, 255, 255, 0.08);
+    --color-green-save: #22c55e;
+    --color-amber-star: #fbbf24;
+    --font-family-inter: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+
+
+
+@layer components {
+
+    /* ============================================
+       TAILWIND-ONLY COMPONENTS (100% @apply)
+       ============================================ */
+
+    /* Nav link */
+    .nav-link {
+        @apply font-medium text-sm py-2 px-4 rounded-lg transition-all duration-300 ease-out text-text-secondary no-underline block;
+    }
+
+    /* Outline button */
+    .btn-outline-light {
+        @apply border-2 border-text-primary text-text-primary bg-transparent rounded-xl font-semibold py-2.5 px-6 transition-all duration-300 ease-out inline-flex items-center justify-center cursor-pointer no-underline;
+    }
+
+    /* Product card */
+    .product-card {
+        @apply bg-bg-card border border-border-glass rounded-2xl overflow-hidden transition-all duration-300 ease-out flex flex-col relative h-full;
+    }
+
+    /* Product image */
+    .product-img {
+        @apply w-full h-full object-contain p-3 transition-transform duration-500 ease-out;
+    }
+
+    /* Product title (line-clamp needs raw CSS) */
+    .product-title {
+        @apply text-[0.95rem] font-semibold leading-snug mb-2 text-text-primary;
+    }
+
+    /* About image wrapper */
+    .about-img-wrapper {
+        @apply relative;
+    }
+
+    /* Scroll reveal */
+    .reveal-card {
+        @apply opacity-0 translate-y-10 transition-all duration-600 ease-out;
+    }
+
+    .reveal-card.revealed {
+        @apply opacity-100 translate-y-0;
+    }
+
+    /* Hero particles container */
+    .hero-particles {
+        @apply absolute inset-0 overflow-hidden pointer-events-none;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+        @apply fixed inset-0 z-1040 flex items-center justify-center opacity-0 invisible transition-all duration-300 p-4;
+    }
+
+    .modal-overlay.active {
+        @apply opacity-100 visible;
+    }
+
+    /* Modal dialog */
+    .modal-dialog {
+        @apply w-full max-w-[500px] max-h-[85vh] overflow-y-auto text-text-primary rounded-2xl transition-transform duration-300 ease-out;
+    }
+
+    .modal-dialog.modal-lg {
+        @apply max-w-[800px];
+    }
+
+    /* Accordion */
+    .accordion-item {
+        @apply bg-transparent border border-border-glass rounded-xl mb-3 overflow-hidden;
+    }
+
+    .accordion-button {
+        @apply w-full text-left cursor-pointer flex justify-between items-center text-text-primary font-semibold border-none p-4;
+    }
+
+    .accordion-collapse {
+        @apply max-h-0 overflow-hidden transition-all duration-300 ease-in-out;
+    }
+
+    .accordion-body {
+        @apply bg-transparent border-t border-border-glass p-4 text-text-secondary;
+    }
+
+    /* Pagination */
+    .page-link {
+        @apply bg-bg-card border border-border-glass text-text-secondary font-semibold text-sm py-2.5 px-4 rounded-xl transition-all duration-300 ease-out no-underline block;
+    }
+
+    .page-item.disabled .page-link {
+        @apply bg-bg-card border-border-glass text-text-secondary opacity-40 pointer-events-none;
+    }
+
+    /* Footer link */
+    .footer-link {
+        @apply text-text-secondary no-underline text-sm transition-all duration-300 ease-out;
+    }
+
+    .footer-link:hover {
+        @apply text-accent-purple pl-1;
+    }
+
+    /* Social link */
+    .social-link {
+        @apply w-10 h-10 rounded-xl bg-bg-card border border-border-glass flex items-center justify-center text-text-secondary no-underline transition-all duration-300 ease-out;
+    }
+
+    /* Back to top */
+    .btn-back-to-top {
+        @apply fixed bottom-8 right-8 w-12 h-12 rounded-xl text-white border-none text-lg flex items-center justify-center opacity-0 invisible translate-y-5 transition-all duration-300 ease-out z-50 cursor-pointer;
+    }
+
+    .btn-back-to-top.visible {
+        @apply opacity-100 visible translate-y-0;
+    }
+
+    /* Variant pill */
+    .variant-pill {
+        @apply flex items-center gap-2.5 py-2 pr-4 pl-2 rounded-xl text-text-secondary cursor-pointer transition-all duration-300 ease-out text-sm font-semibold;
+    }
+
+    /* Variant fade */
+    #productContent {
+        @apply transition-opacity duration-150 ease-out;
+    }
+
+    #productContent.variant-fade-out {
+        @apply opacity-0;
+    }
+
+    /* Product badge */
+    .product-badge {
+        @apply absolute top-3 left-3 z-10 text-white text-[0.7rem] font-bold py-1 px-3 rounded-full tracking-wide;
+    }
+
+    .detail-img-wrapper .product-badge {
+        @apply top-4 left-4 text-[0.8rem] py-1.5 px-4;
+    }
+
+    /* Glow button (@apply part) */
+    .btn-glow {
+        @apply text-white border-none font-semibold rounded-xl relative overflow-hidden transition-all duration-300 ease-out px-6 py-2.5 inline-flex items-center cursor-pointer;
+    }
+
+    .btn-glow:hover {
+        @apply text-white -translate-y-0.5;
+    }
+
+    /* Amazon button (@apply part) */
+    .btn-amazon {
+        @apply text-white border-none font-semibold text-sm py-2.5 rounded-xl transition-all duration-300 ease-out inline-flex items-center justify-center cursor-pointer no-underline;
+    }
+
+    .btn-amazon:hover {
+        @apply text-white -translate-y-0.5;
+    }
+
+    /* Navbar (@apply part) */
+    #mainNav {
+        @apply bg-transparent py-4 transition-all duration-300 ease-out;
+    }
+
+    #mainNav.scrolled {
+        @apply py-2.5;
+    }
+
+    /* Hero section (@apply part) */
+    .hero-section {
+        @apply min-h-screen relative overflow-hidden pt-24;
+    }
+
+    .hero-floating-img {
+        @apply rounded-3xl max-w-[380px];
+    }
+
+    /* Detail image wrapper (@apply part) */
+    .detail-img-wrapper {
+        @apply relative rounded-3xl overflow-hidden border border-border-glass;
+    }
+
+    .btn-back-to-top:hover {
+        @apply -translate-y-1;
+    }
+
+    .page-link:hover {
+        @apply bg-bg-card-hover text-text-primary -translate-y-0.5;
+    }
+
+    .page-item.active .page-link {
+        @apply border-transparent text-white;
+    }
+
+    .btn-outline-light:hover {
+        @apply bg-text-primary text-bg-primary;
+    }
+
+    .product-card:hover {
+        @apply bg-bg-card-hover -translate-y-2;
+    }
+
+    .product-card:hover .product-img {
+        @apply scale-[1.08];
+    }
+
+    .variant-pill:hover {
+        @apply text-text-primary -translate-y-0.5;
+    }
+
+    .variant-pill.active {
+        @apply text-text-primary;
+    }
+
+
+
+    /* ============================================
+   BASE STYLES (raw CSS )
+   ============================================ */
+    @layer base {
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-family-inter);
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--color-accent-purple);
+            color: #fff;
+        }
+    }
+
+
+    /* ============================================
+       RAW CSS (cannot be done with Tailwind)
+       Reason for each: gradients, pseudo-elements,
+       backdrop-filter, animations, box-shadow with
+       specific values, max-height transitions
+       ============================================ */
+
+    /* --- Gradient backgrounds --- */
+    .gradient-text {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .btn-glow {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+    }
+
+    .btn-amazon {
+        background: linear-gradient(135deg, var(--color-accent-orange), #ea580c);
+    }
+
+    .btn-amazon:hover {
+        background: linear-gradient(135deg, #fb923c, var(--color-accent-orange));
+        box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+    }
+
+    .product-badge {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+    }
+
+    .product-badge.trending {
+        background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-blue));
+    }
+
+    .product-badge.hot {
+        background: linear-gradient(135deg, #ef4444, var(--color-accent-orange));
+    }
+
+    .btn-back-to-top {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-back-to-top:hover {
+        box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35);
+    }
+
+    .social-link:hover {
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+        color: #fff;
+        border-color: transparent;
+        transform: translateY(-4px);
+    }
+
+    .hero-section {
+        background: radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+            var(--color-bg-primary);
+    }
+
+    .detail-img-wrapper {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.06), rgba(59, 130, 246, 0.06));
+    }
+
+    /* --- Pseudo-elements (::before, ::after) --- */
+    .btn-glow::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .btn-glow:hover::before {
+        opacity: 1;
+    }
+
+    .about-img-wrapper::before {
+        content: '';
+        position: absolute;
+        inset: -8px;
+        border-radius: 1rem;
+        opacity: 0.15;
+        z-index: -1;
+        background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue), var(--color-accent-cyan));
+        filter: blur(20px);
+    }
+
+    .about-img-wrapper img {
+        border: 1px solid var(--color-border-glass);
+    }
+
+    .accordion-button::after {
+        content: '';
+        flex-shrink: 0;
+        margin-left: 1rem;
+        width: 12px;
+        height: 12px;
+        border-right: 2px solid var(--color-text-secondary);
+        border-bottom: 2px solid var(--color-text-secondary);
+        transform: rotate(45deg);
+        transition: transform 0.3s;
+    }
+
+    .accordion-button.active::after {
+        transform: rotate(-135deg);
+    }
+
+    /* --- Backdrop-filter (glassmorphism) --- */
+    #mainNav {
+        backdrop-filter: blur(0px);
+        border-bottom: 1px solid transparent;
+    }
+
+    #mainNav.scrolled {
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--color-border-glass);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-dialog {
+        background: rgba(18, 18, 26, 0.95);
+        border: 1px solid var(--color-border-glass);
+        backdrop-filter: blur(20px);
+        transform: scale(0.95) translateY(20px);
+    }
+
+    .modal-overlay.active .modal-dialog {
+        transform: scale(1) translateY(0);
+    }
+
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* --- Box-shadows --- */
+    .btn-glow:hover {
+        box-shadow: 0 8px 30px rgba(139, 92, 246, 0.35);
+    }
+
+    .product-card:hover {
+        border-color: rgba(139, 92, 246, 0.2);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+    }
+
+    .page-link:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .hero-floating-img {
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(139, 92, 246, 0.1);
+    }
+
+    /* --- Specific hover backgrounds --- */
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .accordion-button {
+        background: rgba(255, 255, 255, 0.03);
+        font-size: inherit;
+    }
+
+    .accordion-button:hover,
+    .accordion-button.active {
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    /* --- Variant pill borders & backgrounds --- */
+    .variant-pill {
+        border: 2px solid var(--color-border-glass);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .variant-pill:hover {
+        border-color: rgba(139, 92, 246, 0.4);
+        background: rgba(139, 92, 246, 0.08);
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.15);
+    }
+
+    .variant-pill.active {
+        border-color: var(--color-accent-purple);
+        background: rgba(139, 92, 246, 0.12);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    /* --- Line clamp (no Tailwind equivalent) --- */
+    .product-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* --- Max-height transition (accordion) --- */
+    .accordion-collapse.show {
+        max-height: 500px;
+    }
+
+    /* --- Animation --- */
+    .hero-floating-img {
+        animation: heroFloat 6s ease-in-out infinite;
+    }
+
+    .hero-particles .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        opacity: 0;
+        background: var(--color-accent-purple);
+        animation: floatParticle 6s ease-in-out infinite;
+    }
+
+    #productContent.variant-fade-in {
+        animation: variantFadeIn 0.35s ease-out forwards;
+    }
+
+    /* --- Image gallery --- */
+    .detail-img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        padding: 16px;
+        display: block;
+        transition: opacity 0.15s ease-out;
+    }
+
+    .detail-img.img-fade-out {
+        opacity: 0;
+    }
+
+    .detail-img.img-fade-in {
+        animation: imgFadeIn 0.3s ease-out forwards;
+    }
+
+    .gallery-thumbs {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        padding: 0.5rem;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+    }
+
+    .gallery-thumb {
+        flex-shrink: 0;
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+        border: 2px solid var(--color-border-glass);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        overflow: hidden;
+        padding: 4px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .gallery-thumb:hover {
+        border-color: rgba(139, 92, 246, 0.4);
+        background: rgba(139, 92, 246, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+    }
+
+    .gallery-thumb.active {
+        border-color: var(--color-accent-purple);
+        background: rgba(139, 92, 246, 0.12);
+        box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
+    }
+
+    /* --- Gallery navigation arrows --- */
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.45);
+        color: #fff;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        z-index: 5;
+        backdrop-filter: blur(8px);
+        opacity: 0;
+    }
+
+    .detail-img-wrapper:hover .gallery-arrow {
+        opacity: 1;
+    }
+
+    .gallery-arrow-left {
+        left: 12px;
+    }
+
+    .gallery-arrow-right {
+        right: 12px;
+    }
+
+    .gallery-arrow:hover {
+        background: rgba(139, 92, 246, 0.7);
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
+    }
+
+    .gallery-arrow:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    /* --- Gallery image counter --- */
+    .gallery-counter {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.65rem;
+        border-radius: 20px;
+        z-index: 5;
+        backdrop-filter: blur(8px);
+        letter-spacing: 0.5px;
+    }
+
+    /* --- Gallery video embed --- */
+    .gallery-video {
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        aspect-ratio: 16 / 9;
+        border: none;
+        border-radius: 0;
+        display: block;
+    }
+
+    #galleryMediaContainer {
+        transition: opacity 0.15s ease-out;
+    }
+
+    #galleryMediaContainer.img-fade-out {
+        opacity: 0;
+    }
+
+    #galleryMediaContainer.img-fade-in {
+        animation: imgFadeIn 0.3s ease-out forwards;
+    }
+
+    /* --- Video thumbnail play overlay --- */
+    .gallery-thumb-play {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 8px;
+        pointer-events: none;
+    }
+
+    .gallery-thumb-play i {
+        color: #fff;
+        font-size: 1.2rem;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .gallery-thumb {
+        position: relative;
+    }
+
+    .gallery-thumb-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: 8px;
+        color: var(--color-accent-purple);
+        font-size: 1.3rem;
+    }
+}
+
+
+/* ============================================
+   KEYFRAME ANIMATIONS (raw CSS — required)
+   ============================================ */
+@keyframes floatParticle {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+
+    30% {
+        opacity: 0.6;
+    }
+
+    70% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20vh) scale(1);
+    }
+}
+
+@keyframes heroFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0.5deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(-0.5deg);
+    }
+}
+
+@keyframes variantFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes imgFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* ============================================
+   RESPONSIVE OVERRIDES (raw CSS)
+   ============================================ */
+@media (max-width: 1023px) {
+    .hero-section {
+        min-height: auto;
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+    }
+}
+
+@media (max-width: 639px) {
+    .detail-cta {
+        flex-direction: column;
+    }
+
+    .detail-cta a {
+        width: 100%;
+    }
+}

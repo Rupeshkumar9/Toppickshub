@@ -1,152 +1,329 @@
 [
   {
-    "id": "headphones-01",
-    "title": "Premium Wireless Noise-Cancelling Headphones",
-    "category": "Audio",
-    "image":
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
-    "price": 299.99,
-    "originalPrice": 349.99,
-    "rating": 4.5,
-    "reviews": 2847,
+    "id": "Skin-Cream-11",
+    "title": "medicube Skin Cream with Deep Vitamin C",
+    "category": "Beauty and Personal Care",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/41UmupuHVHL.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/41UmupuHVHL.jpg",
+      "https://m.media-amazon.com/images/I/71Ns2bmaDML._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71uda9GFVWL._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81or2WF2nBL._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71YHHYf88RL._SL1500_.jpg"
+    ],
+    "price": 15.90,
+    "originalPrice": 21.90,
+    "rating": 4.6,
+    "reviews": 10656,
     "badge": "Best Seller",
     "badgeClass": "",
-    "description":
-      "Experience studio-quality sound with industry-leading noise cancellation. These premium wireless headphones deliver deep bass, crystal-clear highs, and up to 30 hours of battery life. Perfect for commuting, working, or simply losing yourself in music.",
+    "description": "medicube Capsule Cream with Deep Vitamin C | Liposome Vitamin C Golden Capsule for Radiance & Firm-Looking Skin | Hydrating Glow Gel Texture | Korean Skincare, 1.94 oz ",
     "features": [
-      "Active Noise Cancellation (ANC) with Transparency Mode",
-      "30-hour battery life with quick charge (10 min = 3 hrs)",
-      "Premium memory-foam ear cushions for all-day comfort",
+      "Item Form: Gel Cream ",
+      "Product Benefits: Blemishes Treatment, Glow, Hydrating ",
+      "Product Benefits: Blemishes Treatment, Glow, Hydrating ",
+      "Recommended Uses For Product: Dark Spots, Wrinkles ",
+      "Multipoint Bluetooth 5.3 — connect 2 devices simultaneously",
+      "Specific Uses For Product: Blemish, Dark Spots, Uneven Skin Tone, Wrinkles "
+    ],
+    "affiliateLink": "https://amzn.to/484C7QF",
+    "dateAdded": "2026-03-30"
+  },
+
+  {
+    "id": "Sandals-10",
+    "title": "Project Cloud 100% Genuine Leather Flat Sandals",
+    "category": "Sandal and Shoes",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/81ACPzx7M7L._AC_SY695_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/81ACPzx7M7L._AC_SY695_.jpg",
+      "https://m.media-amazon.com/images/I/71ffjPD6ywL._AC_SY695_.jpg",
+      "https://m.media-amazon.com/images/I/41E8Xc+ea8L._AC_.jpg",
+      "https://m.media-amazon.com/images/I/61DNOyPHqUL._AC_SY695_.jpg"
+    ],
+    "price": 37.90,
+    "originalPrice": 47.90,
+    "rating": 4.4,
+    "reviews": 1499,
+    "badge": "Big Spring Sale",
+    "badgeClass": "",
+    "description": "Project Cloud 100% Genuine Leather Flat Sandals for Women 2026 Comfortable Beach Essentials Womens Sandals Memory Foam Vacation Essentials Slides for Women Footwear (Santorini) ",
+    "features": [
+      "Sole: material",
+      "Rubber: Outer material",
+      "Leather: Inner material Leather, Memory Foam",
+        "𝟭𝟬𝟬% 𝗚𝗲𝗻𝘂𝗶𝗻𝗲 𝗟𝗲𝗮𝘁𝗵𝗲𝗿: Crafted from premium materials, these women sandals offer durability and a refined look. ",
+      "𝗡𝗼𝗻-𝗦𝗹𝗶𝗽 𝗦𝗼𝗹𝗲: Built with a secure grip, these women slides feature a nonslip outsole that delivers stability for daily wear, travel, and dependable walking sandals women performance. "
+
+    ],
+    "affiliateLink": "https://amzn.to/4sBN30t",
+    "dateAdded": "2026-03-30"
+  },
+
+  {
+    "id": "Perfume-09",
+    "title": "Seductive for Women Eau de Toilette 2 ",
+    "category": "Beauty and Personal Care",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71qRcZaRO6L._SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71qRcZaRO6L._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61T7pKA8+sL._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/711SNXZkfpL._SL1500_.jpg"
+    ],
+    "price": 11.99,
+    "originalPrice": 12,
+    "rating": 4.5,
+    "reviews": 12662,
+    "badge": "Best Seller",
+    "badgeClass": "",
+    "description": "Guess Seductive Women / Femme Eau de Toilette Perfume Spray For Women, 1.0 Fl. Oz. ",
+    "features": [
+      "Brand Name: GUESS ",
+      "Item Volume: 1 Fluid Ounces ",
+      "Unit Count: 1 Fluid Ounces "
+
+    ],
+    "affiliateLink": "#",
+    "dateAdded": "2026-03-30"
+  },
+  {
+    "id": "Air-Fresher-08",
+    "title": "Febreze Plug-In Air Freshener",
+    "category": "Accessories",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/81n2Tn6cNgL._AC_SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/81n2Tn6cNgL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61t7C0o-jBL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71fM7hNWNhL._AC_SL1500_.jpg"
+    ],
+    "price": 10,
+    "originalPrice": 15,
+    "rating": 4.7,
+    "reviews": 18274,
+    "badge": "Big Spring Sale",
+    "badgeClass": "",
+    "description": "Febreze Plug-In Air Freshener, Odor-Fighting Scented Oil Starter Kit, Air Fresheners for Home and Bathroom and Kitchen, Long Lasting for Strong Odors, Downy April Fresh Scent, Warmer + 2 Refill ",
+    "features": [
+      "Starter kit includes Febreze Fade Defy PLUG and (2) scented oil refills ",
+      "Fade Defy Technology delivers a first-day freshness that lasts 50 days (on low)",
+      "Enjoy the cozy, just-out-of-the-dryer scent of Downy April Fresh ",
+      "Low-level indicator light tells you when it’s time to refill ",
+      "Continuous, automatic air freshener with digitally controlled scent release"
+    ],
+    "affiliateLink": "https://amzn.to/41AVmO5",
+    "dateAdded": "2026-03-30",
+    "variants": [
+      {
+        "id": "Air-Fresher-08",
+        "label": "Air Fresher"
+      },
+      {
+        "id": "Air-Purifier-07",
+        "label": "Air Purifier"
+      }
+    ]
+  },
+  {
+    "id": "Air-Purifier-07",
+    "title": "LEVOIT Air Purifier for Bedroom",
+    "category": "Accessories",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71wGv7Fh2AL._AC_SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71wGv7Fh2AL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71xugj6XUrL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81p9VQBfrqL._AC_SL1500_.jpg",
+      "https://www.youtube.com/embed/OT2Eag8ix1s?si=w3o7K-x5UBo0BBG8"
+    ],
+    "price": 39.99,
+    "originalPrice": 49.99,
+    "rating": 4.6,
+    "reviews": 42381,
+    "badge": "Big Spring Sale",
+    "badgeClass": "Big Spring Sale",
+    "description": "LEVOIT Air Purifiers for Bedroom Home Dorm, AHAM Verified, 3-in-1 Filter Cleaner With Aroma Pad, Filters Smoke, Allergens, Pet Dander, Odor, Dust, Office, Desktop, Core Mini-P, White ",
+    "features": [
+      "Filter Type: 3-in-1 Filter ",
+      "Wattage: 7 watts ",
+      "Specification Met: AHAM Certified, ETL Certified, Energy Star Certified ",
+      "Included Components: 1*Air Purifier ;, 1*Power Adapter (included inside the air purifier), 1*Pre-installed Filter, 1*User Manual ",
+      "Warranty Description: 2-year warranty "
+    ],
+    "affiliateLink": "https://amzn.to/4sNYAtS",
+    "dateAdded": "2026-03-30",
+    "variants": [
+      {
+        "id": "Air-Purifier-07",
+        "label": "Air Purifier"
+      },
+      {
+        "id": "Air-Fresher-08",
+        "label": "Air Fresher"
+      }
+    ]
+  },
+  {
+    "id": "Halter-Dress-06",
+    "title": "Floerns Women's Y2k Summer Halter Dress ",
+    "category": "Dress",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/61UgvYPlrnL._AC_SY741_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/61UgvYPlrnL._AC_SY741_.jpg",
+      "https://m.media-amazon.com/images/I/612s6Np8OlL._AC_SY879_.jpg",
+      "https://m.media-amazon.com/images/I/71iGk3QG6XL._AC_SY741_.jpg"
+    ],
+    "price": 37,
+    "originalPrice": 55,
+    "rating": 4.2,
+    "reviews": 62,
+    "badge": "",
+    "badgeClass": "",
+    "description": "Floerns Women's Y2k Summer Halter Dress Tie Open Back Sleeveless Ruffle Hem Bubble Going Out Mini Dresses ",
+    "features": [
+      "Material: Non stretch fabric, but very soft, breathable and comfy to wear",
+      "Features: Halter neck, sleeveless, open back, ruffle hem, date night, mini dress",
+      "Occasions: Suitable for parties, beach, dating, seaside vacation, shopping, outdoor activities, bars, festival dating and daily wear",
       "Multipoint Bluetooth 5.3 — connect 2 devices simultaneously",
       "Built-in microphone with AI-powered voice clarity",
-      "Foldable design with premium carry case included"
+      "Garment Care: Machine Wash In Laundry Bag/ Color Separated Washing/ Do Not Bleach"
     ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-16"
+    "affiliateLink": "https://amzn.to/4sIwC2x",
+    "dateAdded": "2026-03-30"
   },
   {
-    "id": "smartwatch-02",
-    "title": "Smart Fitness Watch — GPS & Heart Rate Monitor",
-    "category": "Wearables",
-    "image":
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
-    "price": 199.99,
-    "originalPrice": 249.99,
-    "rating": 5.0,
-    "reviews": 5312,
-    "badge": "Trending",
-    "badgeClass": "trending",
-    "description":
-      "Track your fitness goals with precision. This advanced smartwatch features built-in GPS, continuous heart rate monitoring, SpO2 tracking, and 100+ workout modes. With a stunning always-on AMOLED display and 14-day battery life, it's the perfect companion for an active lifestyle.",
-    "features": [
-      "Built-in GPS with route mapping and pace tracking",
-      "24/7 heart rate & SpO2 blood oxygen monitoring",
-      "100+ workout modes including swimming (5ATM waterproof)",
-      "1.43 AMOLED always-on display — 466×466 resolution",
-      "14-day battery life with magnetic fast charging",
-      "Smart notifications, calls, and music control from your wrist"
+    "id": "Nail-Driller-05",
+    "title": "COSLUS C40 Electric Nail Drill",
+    "category": "Beauty and Personal Care",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71jKmMtvsZL._SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71jKmMtvsZL._SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71SHqZa9GOL._SL1500_.jpg"
     ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-15"
-  },
-  {
-    "id": "speaker-03",
-    "title": "Waterproof Portable Bluetooth Speaker",
-    "category": "Audio",
-    "image":
-      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80",
-    "price": 79.99,
-    "originalPrice": 99.99,
-    "rating": 4.0,
-    "reviews": 1209,
-    "badge": "",
-    "badgeClass": "",
-    "description":
-      "Take your music anywhere with this rugged waterproof Bluetooth speaker. Delivering 360° immersive sound with deep bass, it's built to withstand splashes, dust, and drops. Perfect for pool parties, camping trips, or backyard hangouts.",
-    "features": [
-      "IP67 waterproof and dustproof — survives submersion",
-      "360° omnidirectional sound with passive bass radiator",
-      "20-hour playtime on a single charge",
-      "Bluetooth 5.3 with 30m wireless range",
-      "Stereo pairing — connect two speakers for stereo sound",
-      "Built-in microphone for hands-free calls"
-    ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-14"
-  },
-  {
-    "id": "keyboard-04",
-    "title": "RGB Mechanical Gaming Keyboard — Cherry MX",
-    "category": "Gaming",
-    "image":
-      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80",
-    "price": 129.99,
-    "originalPrice": 159.99,
+    "price": 9,
+    "originalPrice": 12,
     "rating": 4.5,
-    "reviews": 3420,
-    "badge": "🔥 Hot",
-    "badgeClass": "hot",
-    "description":
-      "Dominate your games with this premium mechanical keyboard featuring genuine Cherry MX switches. Per-key RGB lighting, aircraft-grade aluminum frame, and N-key rollover ensure every keystroke counts. Built for competitive gamers and power typists alike.",
+    "reviews": 12664,
+    "badge": "Best Seller",
+    "badgeClass": "Best Seller",
+    "description": "Multifunctional Nail Drill Kit: With adjustable various speeds and 6 different nail drill bits, COSLUS C40 electric nail file can polish or remove acrylic, gel, and dip powder nails, as well as tackle thick nails and cuticle dead skin ",
     "features": [
-      "Genuine Cherry MX Red switches — 50M keystroke lifespan",
-      "Per-key RGB with 16.8 million colors and dynamic effects",
-      "Aircraft-grade aluminum top plate for durability",
-      "Full N-key rollover and anti-ghosting",
-      "Detachable USB-C braided cable",
-      "Dedicated media controls and magnetic wrist rest"
+      "Easy to Use, Even for Beginners：Even beginners can use COSLUS C40 nail drill machine with ease.",
+      "Durable, Low Noise and Low Heat: COSLUS C40 electric nail drill is durable, low noise, and low heat.",
+      "Voltage - 120 Volts",
+      "Maximum Rotational Speed - 20000 RPM ",
+      "Material Type - Metal",
+      "Warranty - 1-year warranty, 24-hour after-sales service, Free 30-day refund / replacement "
     ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-13"
+    "affiliateLink": "https://amzn.to/3ObpJHT",
+    "dateAdded": "2026-03-30"
   },
   {
-    "id": "backpack-05",
-    "title": "Anti-Theft Travel Laptop Backpack — USB Charging",
-    "category": "Travel",
-    "image":
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",
-    "price": 49.99,
-    "originalPrice": 69.99,
+    "id": "Maxi-Dress-04",
+    "title": "BTFBM Summer Spaghetti Maxi Dress",
+    "category": "Dress",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71JMz6nMvFL._AC_SY741_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71JMz6nMvFL._AC_SY741_.jpg",
+      "https://m.media-amazon.com/images/I/71gem062CHL._AC_SY741_.jpg",
+      "https://m.media-amazon.com/images/I/71r4875wmkL._AC_SY741_.jpg",
+      "https://www.youtube.com/embed/TbqOBOmur2s?si=UT5hazWhfx3TTBIZ"
+    ],
+    "price": 39.94,
+    "originalPrice": 45,
     "rating": 4.0,
-    "reviews": 987,
+    "reviews": 1541,
     "badge": "",
     "badgeClass": "",
-    "description":
-      "Travel smart with this anti-theft laptop backpack designed for the modern commuter. Featuring a hidden zipper design, built-in USB charging port, and a padded compartment fitting laptops up to 15.6', it keeps your gear safe and organized on the go.",
+    "description": "BTFBM Women's Summer Spaghetti Strap Dress Cowl Neck Floral Mesh Maxi Dresses, Soft And Lightweight Fabric - The Women Summer Dresses Is Made Of Lightweight Mesh Fabric, Which Brings You Perfect Wearing Experience In Summer",
     "features": [
-      "Anti-theft hidden zipper and RFID-blocking pocket",
-      "Built-in USB charging port with internal cable routing",
-      "Fits laptops up to 15.6 with padded compartment",
-      "Water-resistant Oxford fabric exterior",
-      "Ergonomic padded shoulder straps with luggage strap",
-      "Multiple compartments — 15+ organized pockets"
+      "Color - Floral Navy Red Flower, Floral Blue, Floral Green & many more",
+      "Occasion Type - Wedding, beach, cocktail, party, vacation ",
+      "Sleeve Type - Sleeveless ",
+      "Soft And Lightweight Fabric"
     ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-12"
+    "affiliateLink": "https://amzn.to/4tgoiXA",
+    "dateAdded": "2026-03-30"
   },
   {
-    "id": "charger-06",
-    "title": "15W Fast Wireless Charging Pad — Qi Compatible",
-    "category": "Accessories",
-    "image":
-      "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&q=80",
-    "price": 24.99,
-    "originalPrice": 39.99,
-    "rating": 5.0,
-    "reviews": 4102,
-    "badge": "Editor's Choice",
-    "badgeClass": "",
-    "description":
-      "Cut the cord with this sleek 15W fast wireless charging pad. Compatible with all Qi-enabled devices, it features intelligent temperature control, foreign object detection, and a slim profile that looks great on any desk or nightstand.",
-    "features": [
-      "15W fast charge for Samsung, 7.5W optimized for iPhone",
-      "Universal Qi compatibility — works with all Qi devices",
-      "Intelligent safety: over-charge, over-heat, and foreign object detection",
-      "Ultra-slim design (only 7mm thick) with LED indicator",
-      "Non-slip silicone surface and anti-slip rubber ring",
-      "Includes USB-C cable and 18W Quick Charge adapter"
+    "id": "Rice Cooker-03",
+    "title": "COMFEE' Compact Rice Cooker",
+    "category": "Kitchen",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71ZvJjxR+xL._AC_SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71ZvJjxR+xL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81hpNlXPNrL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/81XMnRHl2wL._AC_SL1500_.jpg",
+      "https://www.youtube.com/embed/ZPkF2HDMCII?si=cYA92V9nLpUtF8jZ"
     ],
-    "affiliateLink": "#",
-    "dateAdded": "2026-02-11"
+    "price": 36,
+    "originalPrice": 42.99,
+    "rating": 4.5,
+    "reviews": 17486,
+    "badge": "Big Spring Sale",
+    "badgeClass": "Big Spring Sale",
+    "description": "Effortless Operation - The Multi Use Programmable Rice Cooker is user friendly with digital panel & LED display, features 6 One-Touch Programs, automatically switches to keep warm for 12 hours and 12 hour delay timer is designed for flexible meal planning.",
+    "features": [
+      "Compact Capacity - 4 cup uncooked (2 Qt) capacity yields up to 8 cups of cooked rice.",
+      "Safety Features - Built-in Overheating Protection. Made of BPA-Free Food Grade Material. ",
+      "Wattage - 450 watts",
+      "Voltage - 120 Volts",
+      "Other Special Features of the Product - Non-Stick "
+    ],
+    "affiliateLink": "https://amzn.to/4dgMeFF",
+    "dateAdded": "2026-03-30"
+  },
+  {
+    "id": "Coffee Maker-02",
+    "title": "Keurig K-Duo Gen 2 Coffee Maker",
+    "category": "Kitchen",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71lXNChJJPL._AC_SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71lXNChJJPL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71bzdufh4vL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71RSpMyK8wL._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/71SVkbt0CYL._AC_SL1500_.jpg"
+    ],
+    "price": 149,
+    "originalPrice": 219.9,
+    "rating": 4.3,
+    "reviews": 5357,
+    "badge": "Limited time deal",
+    "badgeClass": "",
+    "description": "Meet the improved Keurig K-Duo Single Serve & Carafe Coffee Maker: the brewer made for every moment. It gives you the flexibility to brew delicious coffee in single cups using K-Cup pods OR in full carafes using your favorite grounds — so you can serve yourself or a crowd, all with one compact unit.",
+    "features": [
+      "BREW BY THE CUP OR CARAFE: Brews both K-Cup pods and coffee grounds.",
+      "BREW OVER ICE: Adjusts temperature for maximum flavor and less ice melt for single-cup iced coffees and teas. ",
+      "MULTISTREAM TECHNOLOGY: Saturates the grounds evenly to extract full flavor and aroma in every cup, hot or cold. ",
+      "ONE 72OZ RESERVOIR: The extra-large, removable reservoir is shared by both sides for fast, convenient brewing with fewer refills. ",
+      "FRONT-FACING CONTROL PANEL: Intuitive interface for selecting all your brewing preferences. "
+    ],
+    "affiliateLink": "https://amzn.to/4uTAEqn",
+    "dateAdded": "2026-03-23"
+  },
+  {
+    "id": "Pedometer-01",
+    "title": "Hate Smartwatches? This Clip-On Step Counter is All You Need",
+    "category": "Accessories",
+    "thumbnail_image": "https://m.media-amazon.com/images/I/71sFe+oU31L._AC_SL1500_.jpg",
+    "Img_Videos": [
+      "https://m.media-amazon.com/images/I/71sFe+oU31L._AC_SL1500_.jpg",
+      "https://m.media-amazon.com/images/I/61r39y0GTEL._AC_SL1500_.jpg"
+    ],
+    "price": 15.44,
+    "originalPrice": 21,
+    "rating": 4.2,
+    "reviews": 9249,
+    "badge": "",
+    "badgeClass": "",
+    "description": "3D Pedometer for Walking, Simple Step Counter with Large Digital Display, Step Tracker with Removable Clip Lanyard, Accurately Track Steps for Men Women Kids Adults Seniors.",
+    "features": [
+      "Brand: NESKLA",
+      "3D Pedometer for Steps Only. No Bluetooth, no app or smartphone connections required.",
+      "Pedometer is only 26.5g. It is easy to put it in pocket or bag.",
+      "Pedometer has advanced 3D Tri-Axis Sensor technology, so it is much more accurate than most pedometers.",
+      "With large LCD multi-function display, you can clearly and easily read the numbers at a glance. Makes it the perfect fitness monitor for Everyone ",
+      " Included a CR2032 battery can last up to one year. "
+    ],
+    "affiliateLink": "https://amzn.to/4ssAPai",
+    "dateAdded": "2026-03-23"
   }
 ]

@@ -1,724 +1,396 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Detailed product review, features, and best price on Amazon."
-        />
-        <title>Product Details — TopPicksHub</title>
 
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet"
-        />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Detailed product review, features, and best price on Amazon." />
+    <title>Product Details — TopPicksHub</title>
 
-        <!-- Bootstrap 5 CSS -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
+    <!-- Standard favicon link -->
+    <link rel="icon" type="image/png"
+        href="https://e7.pngegg.com/pngimages/168/915/png-clipart-lightning-symbol-icon-art-lightning-symbol-miscellaneous-purple-thumbnail.png">
 
-        <!-- Bootstrap Icons -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-            rel="stylesheet"
-        />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="style.css" />
-    </head>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
 
-    <body>
-        <!-- ============ NAVBAR ============ -->
-        <nav
-            id="mainNav"
-            class="navbar navbar-expand-lg navbar-dark fixed-top scrolled"
-        >
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">
-                    <i class="bi bi-lightning-charge-fill text-accent me-1"></i
-                    >TopPicksHub
-                </a>
-                <button
-                    class="navbar-toggler border-0"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarContent"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="product.html">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html#about"
-                                >About</a
-                            >
-                        </li>
-                    </ul>
-                    <form
-                        class="d-flex search-form"
-                        role="search"
-                        id="searchForm"
-                    >
-                        <div class="input-group">
-                            <span
-                                class="input-group-text bg-transparent border-end-0"
-                                ><i class="bi bi-search text-muted"></i
-                            ></span>
-                            <input
-                                class="form-control border-start-0"
-                                type="search"
-                                placeholder="Search products..."
-                                aria-label="Search"
-                                id="searchInput"
-                            />
-                        </div>
-                    </form>
-                </div>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="src/output.css" />
+
+    <!-- Custom JS -->
+    <script type="module" src="script.js"></script>
+</head>
+
+<body>
+    <!-- ============ NAVBAR ============ -->
+    <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 scrolled">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+            <a class="text-xl font-bold text-text-primary no-underline" href="index.html">
+                <i class="bi bi-lightning-charge-fill text-accent-purple mr-1"></i>TopPicksHub
+            </a>
+            <button
+                class="lg:hidden w-10 h-10 flex items-center justify-center border-none bg-[rgba(255,255,255,0.06)] rounded-lg cursor-pointer p-0"
+                type="button" id="navToggle">
+                <span
+                    class="block w-[22px] h-[2px] bg-text-primary relative before:content-[''] before:absolute before:w-full before:h-[2px] before:bg-text-primary before:left-0 before:-top-[7px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-text-primary after:left-0 after:top-[7px]"></span>
+            </button>
+            <div class="hidden lg:flex items-center gap-1 flex-1 justify-center" id="navbarContent">
+                <ul class="flex gap-1 list-none p-0 m-0">
+                    <li><a class="nav-link" href="index.html">Home</a></li>
+                    <li><a class="nav-link" href="product.html">Products</a></li>
+                    <li><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li><a class="nav-link" href="index.html#about">About</a></li>
+                </ul>
             </div>
-        </nav>
-
-        <!-- ============ PRODUCT DETAIL ============ -->
-        <section class="product-detail-section">
-            <div class="container">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb" id="productBreadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item" id="breadcrumbCategory">
-                            <a href="#">Category</a>
-                        </li>
-                        <li
-                            class="breadcrumb-item active"
-                            aria-current="page"
-                            id="breadcrumbProduct"
-                        >
-                            Product
-                        </li>
-                    </ol>
-                </nav>
-
-                <!-- Single Product Detail (shown when ?id=... is present) -->
-                <div id="productContent">
-                    <!-- Rendered by JS -->
-                </div>
-
-                <!-- Product Not Found (shown when ?id= has an invalid id) -->
-                <div id="productNotFound" class="text-center py-5 d-none">
-                    <i class="bi bi-emoji-frown display-1 text-muted mb-3"></i>
-                    <h2>Product Not Found</h2>
-                    <p class="text-muted mb-4">
-                        The product you're looking for doesn't exist or may have
-                        been removed.
-                    </p>
-                    <a href="index.html" class="btn btn-glow px-4">
-                        <i class="bi bi-house-fill me-2"></i>Back to Home
-                    </a>
-                </div>
-
-                <!-- All Products Listing (shown when no ?id param) -->
-                <div id="allProductsListing" class="d-none">
-                    <div class="text-center mb-5">
-                        <span class="section-badge">ALL PRODUCTS</span>
-                        <h2 class="section-heading mt-2">
-                            Our Product Collection
-                        </h2>
-                        <p class="text-muted mx-auto" style="max-width: 550px">
-                            Browse our complete collection of reviewed products,
-                            sorted from newest to oldest.
-                        </p>
-                    </div>
-                    <div class="row g-4" id="allProductsGrid">
-                        <!-- Rendered by JS -->
-                    </div>
-                    <nav aria-label="Products pagination" class="mt-5">
-                        <ul
-                            class="pagination justify-content-center"
-                            id="productsPagination"
-                        >
-                            <!-- Rendered by JS -->
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============ RELATED PRODUCTS ============ -->
-        <section class="related-section py-5 d-none" id="relatedSection">
-            <div class="container">
-                <div class="text-center mb-4">
-                    <span class="section-badge">YOU MAY ALSO LIKE</span>
-                    <h2 class="section-heading mt-2">Related Products</h2>
-                </div>
-                <div class="row g-4" id="relatedGrid">
-                    <!-- Rendered by JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ============ FOOTER ============ -->
-        <footer class="site-footer py-5">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-4">
-                        <h5 class="fw-bold mb-3">
-                            <i
-                                class="bi bi-lightning-charge-fill text-accent me-1"
-                            ></i
-                            >TopPicksHub
-                        </h5>
-                        <p class="text-muted small">
-                            Your go-to destination for honest product reviews
-                            and curated Amazon recommendations. We help you find
-                            the best products at the best prices.
-                        </p>
-                        <div class="social-links d-flex gap-3 mt-3">
-                            <a href="#" class="social-link"
-                                ><i class="bi bi-twitter-x"></i
-                            ></a>
-                            <a href="#" class="social-link"
-                                ><i class="bi bi-instagram"></i
-                            ></a>
-                            <a href="#" class="social-link"
-                                ><i class="bi bi-youtube"></i
-                            ></a>
-                            <a href="#" class="social-link"
-                                ><i class="bi bi-pinterest"></i
-                            ></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4">
-                        <h6 class="footer-heading">Quick Links</h6>
-                        <ul class="list-unstyled footer-links">
-                            <li><a href="product.html">Products</a></li>
-                            <li><a href="index.html#products">Featured</a></li>
-                            <li>
-                                <a href="index.html#newsletter">Newsletter</a>
-                            </li>
-                            <li><a href="index.html#about">About</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 col-md-4">
-                        <h6 class="footer-heading">Support</h6>
-                        <ul class="list-unstyled footer-links">
-                            <li>
-                                <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#contactModal"
-                                    >Contact Us</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#faqModal"
-                                    >FAQ</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#privacyModal"
-                                    >Privacy Policy</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#termsModal"
-                                    >Terms of Use</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <h6 class="footer-heading">Affiliate Disclosure</h6>
-                        <p class="text-muted small">
-                            <i class="bi bi-info-circle me-1"></i>
-                            TopPicksHub is a participant in the Amazon Services
-                            LLC Associates Program, an affiliate advertising
-                            program designed to provide a means for sites to
-                            earn advertising fees by advertising and linking to
-                            amazon.com. As an Amazon Associate, we earn from
-                            qualifying purchases.
-                        </p>
-                    </div>
-                </div>
-                <hr class="border-secondary mt-4" />
+            <form class="hidden lg:block" role="search" id="searchForm">
                 <div
-                    class="d-flex flex-wrap justify-content-between align-items-center"
-                >
-                    <p class="text-muted small mb-0">
-                        &copy; 2026 TopPicksHub. All rights reserved.
+                    class="flex items-center px-2 bg-[rgba(255,255,255,0.06)] rounded-xl border border-border-glass overflow-hidden transition-all duration-300 focus-within:border-accent-purple focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]">
+                    <i class="bi bi-search text-text-secondary"></i>
+                    <input
+                        class="bg-transparent border-none text-text-primary text-sm py-2 px-3 outline-none w-full placeholder:text-text-secondary"
+                        type="search" placeholder="Search products..." aria-label="Search" id="searchInput" />
+                </div>
+            </form>
+        </div>
+        <!-- Mobile menu -->
+        <div class="hidden lg:hidden flex-col gap-2 px-4 pb-4 pt-2" id="mobileMenu">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="product.html">Products</a>
+            <a class="nav-link" href="blog.html">Blog</a>
+            <a class="nav-link" href="index.html#about">About</a>
+            <form class="mt-2" role="search" id="searchFormMobile">
+                <div
+                    class="flex items-center px-2 bg-[rgba(255,255,255,0.06)] rounded-xl border border-border-glass overflow-hidden transition-all duration-300 focus-within:border-accent-purple focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]">
+                    <i class="bi bi-search text-text-secondary"></i>
+                    <input
+                        class="bg-transparent border-none text-text-primary text-sm py-2 px-3 outline-none w-full placeholder:text-text-secondary"
+                        type="search" placeholder="Search products..." aria-label="Search" id="searchInputMobile" />
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <!-- ============ PRODUCT DETAIL ============ -->
+    <section class="pt-28 pb-12 min-h-[70vh]">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="flex list-none p-0 gap-0 text-sm" id="productBreadcrumb">
+                    <li class="flex items-center text-accent-purple">
+                        <a href="index.html"
+                            class="text-accent-purple no-underline hover:text-text-primary transition-all duration-300">Home</a>
+                    </li>
+                    <li class="flex items-center before:content-['/'] before:text-text-secondary before:px-2"
+                        id="breadcrumbCategory">
+                        <a href="#"
+                            class="text-accent-purple no-underline hover:text-text-primary transition-all duration-300">Category</a>
+                    </li>
+                    <li class="flex items-center text-text-secondary before:content-['/'] before:text-text-secondary before:px-2"
+                        aria-current="page" id="breadcrumbProduct">
+                        Product
+                    </li>
+                </ol>
+            </nav>
+
+            <!-- Single Product Detail (shown when ?id=... is present) -->
+            <div id="productContent">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Product Not Found -->
+            <div id="productNotFound" class="text-center py-12 hidden">
+                <i class="bi bi-emoji-frown text-6xl text-text-secondary mb-3 block"></i>
+                <h2 class="text-2xl font-bold">Product Not Found</h2>
+                <p class="text-text-secondary mb-4">The product you're looking for doesn't exist or may have been
+                    removed.</p>
+                <a href="index.html" class="btn-glow px-6 py-3"><i class="bi bi-house-fill mr-2"></i>Back to Home</a>
+            </div>
+
+            <!-- All Products Listing -->
+            <div id="allProductsListing" class="hidden">
+                <div class="text-center mb-12">
+                    <span
+                        class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">ALL
+                        PRODUCTS</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight mt-2">Our Product Collection</h2>
+                    <p class="text-text-secondary mx-auto max-w-[550px] mt-2">Browse our complete collection of reviewed
+                        products, sorted from newest to oldest.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="allProductsGrid">
+                    <!-- Rendered by JS -->
+                </div>
+                <nav aria-label="Products pagination" class="mt-8">
+                    <ul class="flex list-none p-0 gap-1.5 justify-center" id="productsPagination">
+                        <!-- Rendered by JS -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ RELATED PRODUCTS ============ -->
+    <section class="bg-bg-secondary py-16 hidden" id="relatedSection">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <span
+                    class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">YOU
+                    MAY ALSO LIKE</span>
+                <h2 class="text-3xl font-extrabold tracking-tight mt-2">Related Products</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="relatedGrid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-bg-primary border-t border-border-glass py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="lg:col-span-1">
+                    <h5 class="font-bold mb-3 text-lg text-text-primary">
+                        <i class="bi bi-lightning-charge-fill text-accent-purple mr-1"></i>TopPicksHub
+                    </h5>
+                    <p class="text-text-secondary text-sm">Your go-to destination for honest product reviews and curated
+                        Amazon recommendations.</p>
+                    <div class="flex gap-3 mt-3">
+                        <a href="https://pinterest.com/priya_nshi9821/" class="social-link" target="blank1"><i
+                                class="bi bi-pinterest"></i></a>
+                        <a href="https://amzn.to/4bHpBJi" class="social-link" target="blank2"><i
+                                class="bi bi-amazon"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Quick Links</h6>
+                    <ul class="list-none p-0 space-y-1.5">
+                        <li><a href="product.html" class="footer-link">Products</a></li>
+                        <li><a href="index.html#products" class="footer-link">Featured</a></li>
+                        <li><a href="index.html#newsletter" class="footer-link">Newsletter</a></li>
+                        <li><a href="index.html#about" class="footer-link">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Support</h6>
+                    <ul class="list-none p-0 space-y-1.5">
+                        <li><a href="#" class="footer-link" data-modal-target="contactModal">Contact Us</a></li>
+                        <li><a href="#" class="footer-link" data-modal-target="faqModal">FAQ</a></li>
+                        <li><a href="#" class="footer-link" data-modal-target="privacyModal">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link" data-modal-target="termsModal">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Affiliate Disclosure
+                    </h6>
+                    <p class="text-text-secondary text-sm">
+                        <i class="bi bi-info-circle mr-1"></i>
+                        TopPicksHub is a participant in the Amazon Services LLC Associates Program, an affiliate
+                        advertising program designed to provide a means for sites to earn advertising fees by
+                        advertising and linking to amazon.com.
                     </p>
-                    <p class="text-muted small mb-0">
-                        Made with <i class="bi bi-heart-fill text-danger"></i>
-                    </p>
                 </div>
             </div>
-        </footer>
-
-        <!-- ============ MODALS ============ -->
-
-        <!-- Contact Us Modal -->
-        <div
-            class="modal fade"
-            id="contactModal"
-            tabindex="-1"
-            aria-labelledby="contactModalLabel"
-            aria-hidden="true"
-        >
-            <div
-                class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-            >
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 class="modal-title" id="contactModalLabel">
-                            <i class="bi bi-envelope-fill text-accent me-2"></i
-                            >Contact Us
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-muted mb-4">
-                            Have a question, suggestion, or partnership inquiry?
-                            We'd love to hear from you!
-                        </p>
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <div class="about-feature-icon">
-                                <i class="bi bi-envelope"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1">Email</h6>
-                                <p class="text-muted small mb-0">
-                                    support@toppickshub.com
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <div class="about-feature-icon">
-                                <i class="bi bi-clock"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1">Response Time</h6>
-                                <p class="text-muted small mb-0">
-                                    We typically respond within 24–48 hours on
-                                    business days.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <div class="about-feature-icon">
-                                <i class="bi bi-pin-map"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1">Location</h6>
-                                <p class="text-muted small mb-0">
-                                    Based remotely — serving readers worldwide.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="about-feature-icon">
-                                <i class="bi bi-chat-dots"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1">Social Media</h6>
-                                <p class="text-muted small mb-0">
-                                    Reach out via Pinterest or follow us for
-                                    updates.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer border-top-0">
-                        <button
-                            type="button"
-                            class="btn btn-outline-light"
-                            data-bs-dismiss="modal"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
+            <hr class="border-border-glass mt-8" />
+            <div class="flex flex-wrap justify-between items-center mt-4">
+                <p id="footer_date" class="text-text-secondary text-sm mb-0"> </p>
+                <p class="text-text-secondary text-sm mb-0">Managed by Rupes <i
+                        class="bi bi-heart-fill text-red-500"></i></p>
             </div>
         </div>
+    </footer>
 
-        <!-- FAQ Modal -->
-        <div
-            class="modal fade"
-            id="faqModal"
-            tabindex="-1"
-            aria-labelledby="faqModalLabel"
-            aria-hidden="true"
-        >
-            <div
-                class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-            >
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 class="modal-title" id="faqModalLabel">
-                            <i
-                                class="bi bi-question-circle-fill text-accent me-2"
-                            ></i
-                            >Frequently Asked Questions
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+    <!-- ============ MODALS ============ -->
+
+    <!-- Contact Us Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-dialog">
+            <div class="flex items-center justify-between p-6 pb-2">
+                <h5 class="font-bold text-xl"><i class="bi bi-envelope-fill text-accent-purple mr-2"></i>Contact Us</h5>
+                <button type="button"
+                    class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+                    data-modal-close><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="px-6 py-4">
+                <p class="text-text-secondary mb-4">Have a question, suggestion, or partnership inquiry? We'd love to
+                    hear from you!</p>
+                <div class="flex items-start gap-3 mb-3">
+                    <div
+                        class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple text-lg">
+                        <i class="bi bi-envelope"></i>
                     </div>
-                    <div class="modal-body">
-                        <div class="accordion" id="faqAccordionProduct">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#faqP1"
-                                    >
-                                        Are your reviews honest and unbiased?
-                                    </button>
-                                </h2>
-                                <div
-                                    id="faqP1"
-                                    class="accordion-collapse collapse show"
-                                    data-bs-parent="#faqAccordionProduct"
-                                >
-                                    <div class="accordion-body text-muted">
-                                        Absolutely. We never accept payments or
-                                        sponsorships to feature any product. Our
-                                        selections are based on real user
-                                        reviews, expert analysis, and hands-on
-                                        testing.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#faqP2"
-                                    >
-                                        How do you make money?
-                                    </button>
-                                </h2>
-                                <div
-                                    id="faqP2"
-                                    class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordionProduct"
-                                >
-                                    <div class="accordion-body text-muted">
-                                        We earn a small commission through the
-                                        Amazon Associates Program when you
-                                        purchase a product through our affiliate
-                                        links. This comes at no extra cost to
-                                        you.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#faqP3"
-                                    >
-                                        Do I pay more by using your links?
-                                    </button>
-                                </h2>
-                                <div
-                                    id="faqP3"
-                                    class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordionProduct"
-                                >
-                                    <div class="accordion-body text-muted">
-                                        No! The price you pay on Amazon is
-                                        exactly the same whether you use our
-                                        link or go directly. Our commission is
-                                        paid by Amazon, not by you.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#faqP4"
-                                    >
-                                        How often do you add new products?
-                                    </button>
-                                </h2>
-                                <div
-                                    id="faqP4"
-                                    class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordionProduct"
-                                >
-                                    <div class="accordion-body text-muted">
-                                        We add new products regularly as we
-                                        review them. Subscribe to our newsletter
-                                        to be the first to know about new picks
-                                        and deals!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#faqP5"
-                                    >
-                                        Can I suggest a product for review?
-                                    </button>
-                                </h2>
-                                <div
-                                    id="faqP5"
-                                    class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordionProduct"
-                                >
-                                    <div class="accordion-body text-muted">
-                                        Of course! We welcome suggestions from
-                                        our community. Reach out to us via our
-                                        Contact page and let us know what
-                                        product you'd like us to review.
-                                    </div>
-                                </div>
-                            </div>
+                    <div>
+                        <h6 class="font-semibold mb-1 text-text-primary">Email</h6>
+                        <p class="text-text-secondary text-sm">Rupeshkumar@45670234@gmail.com</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 mb-3">
+                    <div
+                        class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple text-lg">
+                        <i class="bi bi-clock"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-semibold mb-1 text-text-primary">Response Time</h6>
+                        <p class="text-text-secondary text-sm">We typically respond within 24–48 hours on business days.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 mb-3">
+                    <div
+                        class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple text-lg">
+                        <i class="bi bi-pin-map"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-semibold mb-1 text-text-primary">Location</h6>
+                        <p class="text-text-secondary text-sm">Based remotely — serving readers worldwide.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div
+                        class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple text-lg">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-semibold mb-1 text-text-primary">Social Media</h6>
+                        <p class="text-text-secondary text-sm">Reach out via Pinterest or follow us for updates.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 pb-6 pt-2"><button type="button" class="btn-outline-light px-6 py-2.5"
+                    data-modal-close>Close</button></div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div class="modal-overlay" id="faqModal">
+        <div class="modal-dialog modal-lg">
+            <div class="flex items-center justify-between p-6 pb-2">
+                <h5 class="font-bold text-xl"><i
+                        class="bi bi-question-circle-fill text-accent-purple mr-2"></i>Frequently Asked Questions</h5>
+                <button type="button"
+                    class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+                    data-modal-close><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="px-6 py-4">
+                <div data-accordion="faqAccordionProduct">
+                    <div class="accordion-item"><button class="accordion-button active"
+                            data-accordion-target="faqP1">Are your reviews honest and unbiased?</button>
+                        <div id="faqP1" class="accordion-collapse show">
+                            <div class="accordion-body">Absolutely. We never accept payments or sponsorships to feature
+                                any product. Our selections are based on real user reviews, expert analysis, and
+                                hands-on testing.</div>
                         </div>
                     </div>
-                    <div class="modal-footer border-top-0">
-                        <button
-                            type="button"
-                            class="btn btn-outline-light"
-                            data-bs-dismiss="modal"
-                        >
-                            Close
-                        </button>
+                    <div class="accordion-item"><button class="accordion-button" data-accordion-target="faqP2">How do
+                            you make money?</button>
+                        <div id="faqP2" class="accordion-collapse">
+                            <div class="accordion-body">We earn a small commission through the Amazon Associates Program
+                                when you purchase a product through our affiliate links. This comes at no extra cost to
+                                you.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item"><button class="accordion-button" data-accordion-target="faqP3">Do I pay
+                            more by using your links?</button>
+                        <div id="faqP3" class="accordion-collapse">
+                            <div class="accordion-body">No! The price you pay on Amazon is exactly the same whether you
+                                use our link or go directly. Our commission is paid by Amazon, not by you.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item"><button class="accordion-button" data-accordion-target="faqP4">How often
+                            do you add new products?</button>
+                        <div id="faqP4" class="accordion-collapse">
+                            <div class="accordion-body">We add new products regularly as we review them. Subscribe to
+                                our newsletter to be the first to know about new picks and deals!</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item"><button class="accordion-button" data-accordion-target="faqP5">Can I
+                            suggest a product for review?</button>
+                        <div id="faqP5" class="accordion-collapse">
+                            <div class="accordion-body">Of course! We welcome suggestions from our community. Reach out
+                                to us via our Contact page and let us know what product you'd like us to review.</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="px-6 pb-6 pt-2"><button type="button" class="btn-outline-light px-6 py-2.5"
+                    data-modal-close>Close</button></div>
         </div>
+    </div>
 
-        <!-- Privacy Policy Modal -->
-        <div
-            class="modal fade"
-            id="privacyModal"
-            tabindex="-1"
-            aria-labelledby="privacyModalLabel"
-            aria-hidden="true"
-        >
-            <div
-                class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-            >
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 class="modal-title" id="privacyModalLabel">
-                            <i
-                                class="bi bi-shield-lock-fill text-accent me-2"
-                            ></i
-                            >Privacy Policy
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body text-muted">
-                        <p>
-                            <strong class="text-light">Last Updated:</strong>
-                            February 2026
-                        </p>
-                        <h6 class="text-light mt-4">
-                            1. Information We Collect
-                        </h6>
-                        <p>
-                            We collect minimal personal information. When you
-                            subscribe to our newsletter, we collect your email
-                            address. We also use standard analytics tools that
-                            may collect anonymous browsing data such as page
-                            views, device type, and referral source.
-                        </p>
-                        <h6 class="text-light mt-4">
-                            2. How We Use Your Information
-                        </h6>
-                        <p>
-                            Your email is used solely to send you our newsletter
-                            with product recommendations and deals. We never
-                            sell, rent, or share your personal information with
-                            third parties for marketing purposes.
-                        </p>
-                        <h6 class="text-light mt-4">3. Cookies</h6>
-                        <p>
-                            Our site may use cookies for analytics and to
-                            improve your browsing experience. Amazon affiliate
-                            links may set cookies to track referrals, as part of
-                            the Amazon Associates Program.
-                        </p>
-                        <h6 class="text-light mt-4">4. Third-Party Links</h6>
-                        <p>
-                            Our site contains links to Amazon.com. When you
-                            click these links, you leave our site and are
-                            subject to Amazon's privacy policy and terms.
-                        </p>
-                        <h6 class="text-light mt-4">5. Data Security</h6>
-                        <p>
-                            We take reasonable measures to protect your
-                            information. However, no method of internet
-                            transmission is 100% secure, and we cannot guarantee
-                            absolute security.
-                        </p>
-                        <h6 class="text-light mt-4">6. Contact</h6>
-                        <p>
-                            If you have questions about this Privacy Policy,
-                            please contact us at support@toppickshub.com.
-                        </p>
-                    </div>
-                    <div class="modal-footer border-top-0">
-                        <button
-                            type="button"
-                            class="btn btn-outline-light"
-                            data-bs-dismiss="modal"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
+    <!-- Privacy Policy Modal -->
+    <div class="modal-overlay" id="privacyModal">
+        <div class="modal-dialog modal-lg">
+            <div class="flex items-center justify-between p-6 pb-2">
+                <h5 class="font-bold text-xl"><i class="bi bi-shield-lock-fill text-accent-purple mr-2"></i>Privacy
+                    Policy</h5>
+                <button type="button"
+                    class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+                    data-modal-close><i class="bi bi-x-lg"></i></button>
             </div>
-        </div>
-
-        <!-- Terms of Use Modal -->
-        <div
-            class="modal fade"
-            id="termsModal"
-            tabindex="-1"
-            aria-labelledby="termsModalLabel"
-            aria-hidden="true"
-        >
-            <div
-                class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-            >
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <h5 class="modal-title" id="termsModalLabel">
-                            <i
-                                class="bi bi-file-earmark-text-fill text-accent me-2"
-                            ></i
-                            >Terms of Use
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body text-muted">
-                        <p>
-                            <strong class="text-light">Last Updated:</strong>
-                            February 2026
-                        </p>
-                        <h6 class="text-light mt-4">1. Acceptance of Terms</h6>
-                        <p>
-                            By accessing and using TopPicksHub, you agree to be
-                            bound by these Terms of Use. If you do not agree,
-                            please do not use our website.
-                        </p>
-                        <h6 class="text-light mt-4">2. Affiliate Disclosure</h6>
-                        <p>
-                            TopPicksHub is a participant in the Amazon Services
-                            LLC Associates Program. We earn commissions from
-                            qualifying purchases made through our affiliate
-                            links at no additional cost to you.
-                        </p>
-                        <h6 class="text-light mt-4">3. Content Accuracy</h6>
-                        <p>
-                            We strive to provide accurate and up-to-date product
-                            information, pricing, and reviews. However, prices
-                            and availability on Amazon change frequently, and we
-                            cannot guarantee real-time accuracy. Always verify
-                            on Amazon before purchasing.
-                        </p>
-                        <h6 class="text-light mt-4">
-                            4. Intellectual Property
-                        </h6>
-                        <p>
-                            All content on TopPicksHub, including text, design,
-                            and graphics, is our intellectual property and may
-                            not be reproduced without permission.
-                        </p>
-                        <h6 class="text-light mt-4">
-                            5. Limitation of Liability
-                        </h6>
-                        <p>
-                            TopPicksHub provides product recommendations for
-                            informational purposes only. We are not responsible
-                            for any purchases, product defects, or issues
-                            arising from transactions on Amazon or other
-                            third-party sites.
-                        </p>
-                        <h6 class="text-light mt-4">6. Changes to Terms</h6>
-                        <p>
-                            We may update these Terms at any time. Continued use
-                            of the site after changes constitutes acceptance of
-                            the updated terms.
-                        </p>
-                    </div>
-                    <div class="modal-footer border-top-0">
-                        <button
-                            type="button"
-                            class="btn btn-outline-light"
-                            data-bs-dismiss="modal"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
+            <div class="px-6 py-4 text-text-secondary">
+                <p><strong class="text-text-primary">Last Updated:</strong> February 2026</p>
+                <h6 class="text-text-primary mt-4 font-semibold">1. Information We Collect</h6>
+                <p class="mt-1">We collect minimal personal information. When you subscribe to our newsletter, we
+                    collect your email address.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">2. How We Use Your Information</h6>
+                <p class="mt-1">Your email is used solely to send you our newsletter with product recommendations and
+                    deals.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">3. Cookies</h6>
+                <p class="mt-1">Our site may use cookies for analytics and to improve your browsing experience.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">4. Third-Party Links</h6>
+                <p class="mt-1">Our site contains links to Amazon.com. When you click these links, you leave our site
+                    and are subject to Amazon's privacy policy.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">5. Data Security</h6>
+                <p class="mt-1">We take reasonable measures to protect your information.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">6. Contact</h6>
+                <p class="mt-1">If you have questions, please contact us at Rupeshkumar45670234@gmail.com.</p>
             </div>
+            <div class="px-6 pb-6 pt-2"><button type="button" class="btn-outline-light px-6 py-2.5"
+                    data-modal-close>Close</button></div>
         </div>
+    </div>
 
-        <!-- Back to Top -->
-        <button id="backToTop" class="btn-back-to-top" aria-label="Back to top">
-            <i class="bi bi-arrow-up"></i>
-        </button>
+    <!-- Terms of Use Modal -->
+    <div class="modal-overlay" id="termsModal">
+        <div class="modal-dialog modal-lg">
+            <div class="flex items-center justify-between p-6 pb-2">
+                <h5 class="font-bold text-xl"><i class="bi bi-file-earmark-text-fill text-accent-purple mr-2"></i>Terms
+                    of Use</h5>
+                <button type="button"
+                    class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+                    data-modal-close><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="px-6 py-4 text-text-secondary">
+                <p><strong class="text-text-primary">Last Updated:</strong> February 2026</p>
+                <h6 class="text-text-primary mt-4 font-semibold">1. Acceptance of Terms</h6>
+                <p class="mt-1">By accessing and using TopPicksHub, you agree to be bound by these Terms of Use.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">2. Affiliate Disclosure</h6>
+                <p class="mt-1">TopPicksHub is a participant in the Amazon Services LLC Associates Program.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">3. Content Accuracy</h6>
+                <p class="mt-1">We strive to provide accurate product information. Prices and availability on Amazon
+                    change frequently.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">4. Intellectual Property</h6>
+                <p class="mt-1">All content on TopPicksHub is our intellectual property.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">5. Limitation of Liability</h6>
+                <p class="mt-1">TopPicksHub provides product recommendations for informational purposes only.</p>
+                <h6 class="text-text-primary mt-4 font-semibold">6. Changes to Terms</h6>
+                <p class="mt-1">We may update these Terms at any time. Continued use constitutes acceptance.</p>
+            </div>
+            <div class="px-6 pb-6 pt-2"><button type="button" class="btn-outline-light px-6 py-2.5"
+                    data-modal-close>Close</button></div>
+        </div>
+    </div>
 
-        <!-- Bootstrap 5 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Back to Top -->
+    <button id="backToTop" class="btn-back-to-top" aria-label="Back to top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
 
-        <!-- Custom JS -->
-        <script type="module" src="script.js"></script>
-    </body>
+</body>
+
 </html>
