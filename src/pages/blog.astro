@@ -1,0 +1,110 @@
+---
+import path from 'path';
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+
+// Fetch all markdown blog posts
+const posts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true })) as any[];
+const sortedPosts = posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+
+// Extract unique categories for filtering tabs
+const categories = ['All', ...new Set(posts.map(p => p.frontmatter.category))];
+---
+
+<Layout title="Articles & Buying Guides — TopPicksHub" description="Read our expert buying guides, product roundups, and shopping tips to find the best gadgets, gear, and everyday essentials on Amazon.">
+  <!-- ============ BLOG LISTING ============ -->
+  <section class="pt-28 pb-16 min-h-[80vh]">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">
+          TOPPICKSHUB BLOG
+        </span>
+        <h1 class="text-4xl font-extrabold tracking-tight mt-2">Expert Guides & Reviews</h1>
+        <p class="text-text-secondary mx-auto max-w-[550px] mt-2">
+          Read our in-depth guides and tips to make informed purchasing decisions.
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      {categories.length > 2 && (
+        <div class="flex justify-center items-center gap-3 flex-wrap mb-10" id="categoryTabs">
+          {categories.map((category, index) => (
+            <button class={`page-link px-5 py-2 cursor-pointer border border-border-glass rounded-full text-sm font-semibold transition-all duration-300 ${index === 0 ? 'active' : ''}`} data-category-tab={category}>
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <!-- Blog Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogGrid">
+        {sortedPosts.map(post => {
+          const id = path.basename(post.file, '.md');
+          return (
+            <div class="blog-item-wrapper" data-category={post.frontmatter.category}>
+              <PostCard post={{
+                id,
+                title: post.frontmatter.title,
+                excerpt: post.frontmatter.excerpt,
+                thumbnail_image: post.frontmatter.thumbnail_image,
+                category: post.frontmatter.category,
+                date: post.frontmatter.date,
+                readTime: post.frontmatter.readTime
+              }} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side script for category filtering & IntersectionObserver -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('[data-category-tab]');
+      const items = document.querySelectorAll('.blog-item-wrapper') as NodeListOf<HTMLElement>;
+
+      if (tabs.length > 0) {
+        tabs.forEach(tab => {
+          tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Toggle active state
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const selectedCategory = tab.getAttribute('data-category-tab');
+
+            // Filter items
+            items.forEach((item, index) => {
+              const itemCategory = item.getAttribute('data-category');
+              if (selectedCategory === 'All' || itemCategory === selectedCategory) {
+                item.style.display = 'block';
+                const card = item.querySelector('.reveal-card');
+                if (card) {
+                  // Re-trigger animation
+                  card.classList.remove('revealed');
+                  setTimeout(() => card.classList.add('revealed'), index * 50);
+                }
+              } else {
+                item.style.display = 'none';
+              }
+            });
+          });
+        });
+      }
+
+      // Initial reveal
+      const cards = document.querySelectorAll('.reveal-card:not(.revealed)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('revealed'), index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+</Layout>

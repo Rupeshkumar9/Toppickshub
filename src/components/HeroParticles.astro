@@ -1,0 +1,20 @@
+<div class="hero-particles" id="heroParticles"></div>
+
+<script>
+  const particlesContainer = document.getElementById('heroParticles');
+  if (particlesContainer) {
+    const colors = ['#8b5cf6', '#3b82f6', '#06b6d4', '#ec4899'];
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 6 + 's';
+      p.style.animationDuration = (4 + Math.random() * 4) + 's';
+      const size = (2 + Math.random() * 4) + 'px';
+      p.style.width = size;
+      p.style.height = size;
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particlesContainer.appendChild(p);
+    }
+  }
+</script>

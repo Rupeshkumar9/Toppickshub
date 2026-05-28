@@ -1,0 +1,248 @@
+---
+import path from 'path';
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import PostCard from '../components/PostCard.astro';
+import HeroParticles from '../components/HeroParticles.astro';
+import PRODUCTS from '../../products.json';
+
+// Fetch blog posts
+const posts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true })) as any[];
+const sortedPosts = posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+const latestPosts = sortedPosts.slice(0, 3);
+
+// Sort products by date added (newest first) and take top 6
+const sortedProducts = [...PRODUCTS].sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
+const featuredProducts = sortedProducts.slice(0, 6);
+
+// Current month/year for the trending badge
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const currentDate = new Date();
+const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+---
+
+<Layout>
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="hero-section flex items-center">
+    <HeroParticles />
+    <div class="max-w-7xl mx-auto px-4 relative w-full">
+      <div class="flex flex-wrap items-center">
+        <div class="w-full lg:w-7/12">
+          <span id="hero_date" class="inline-block bg-[rgba(139,92,246,0.15)] text-accent-purple border border-[rgba(139,92,246,0.3)] font-semibold text-[0.8rem] py-2 px-4 rounded-full tracking-wide mb-3">
+            {trendingBadgeText}
+          </span>
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-extrabold leading-[1.1] tracking-[-1.5px]">
+            Discover<br />
+            <span class="gradient-text">Top-Rated</span>
+            Products<br />
+            Handpicked For You
+          </h1>
+          <p class="text-lg text-text-secondary max-w-[520px] leading-relaxed mt-3 mb-4">
+            Honest reviews, expert recommendations, and
+            unbeatable deals on the best gear, gadgets, and
+            everyday essentials — all in one place.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#products" class="btn-glow py-3 px-6 text-base flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Browse Products
+            </a>
+          </div>
+        </div>
+        <div class="w-full lg:w-5/12 hidden lg:block text-center">
+          <div id="hero_image" class="relative">
+            {PRODUCTS.length > 0 && (
+              <a href={PRODUCTS[0].affiliateLink} target="_blank" rel="noopener noreferrer">
+                <img src={PRODUCTS[0].thumbnail_image} alt={PRODUCTS[0].title} class="hero-floating-img max-w-full" />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED PRODUCTS ============ -->
+  <section id="products" class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">
+          CURATED FOR YOU
+        </span>
+        <h2 class="text-3xl font-extrabold tracking-tight mt-2">Our Featured Products</h2>
+        <p class="text-text-secondary mx-auto max-w-[550px] mt-2">
+          Hand-picked favorites that our readers love. Click any
+          product to check the latest price on Amazon.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
+        {featuredProducts.map(p => (
+          <ProductCard product={p} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LATEST CONTENT (FUNNEL) ============ -->
+  <section id="blog-preview" class="py-16 bg-bg-secondary border-t border-b border-border-glass">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">
+          LATEST ARTICLES
+        </span>
+        <h2 class="text-3xl font-extrabold tracking-tight mt-2">Expert Guides & Tips</h2>
+        <p class="text-text-secondary mx-auto max-w-[550px] mt-2">
+          Read our latest informational posts to find tips, guides, and recommendations.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {latestPosts.map(post => {
+          const id = path.basename(post.file, '.md');
+          return (
+            <PostCard post={{
+              id,
+              title: post.frontmatter.title,
+              excerpt: post.frontmatter.excerpt,
+              thumbnail_image: post.frontmatter.thumbnail_image,
+              category: post.frontmatter.category,
+              date: post.frontmatter.date,
+              readTime: post.frontmatter.readTime
+            }} />
+          );
+        })}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/blog" class="btn-outline-light py-2.5 px-6 flex items-center justify-center gap-2 inline-flex">
+          View All Articles <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-wrap items-center gap-12">
+        <div class="w-full lg:w-[calc(50%-1.5rem)]">
+          <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">
+            WHY TRUST US
+          </span>
+          <h2 class="text-3xl font-extrabold tracking-tight mt-2">
+            We Test. We Review. You Save.
+          </h2>
+          <p class="text-text-secondary mt-2">
+            Every product on TopPicksHub is rigorously
+            researched and compared. We read thousands of real
+            user reviews so you don't have to.
+          </p>
+          <div class="mt-4">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+                <svg class="w-5 h-5 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg>
+              </div>
+              <div>
+                <h6 class="font-semibold mb-1 text-text-primary">Unbiased Reviews</h6>
+                <p class="text-text-secondary text-sm">
+                  We never accept sponsorships. Our picks
+                  are 100% based on merit and real user
+                  feedback.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+                <svg class="w-5 h-5 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              </div>
+              <div>
+                <h6 class="font-semibold mb-1 text-text-primary">Price Tracking</h6>
+                <p class="text-text-secondary text-sm">
+                  We monitor prices so we only recommend
+                  products when they're at their best
+                  value.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+                <svg class="w-5 h-5 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div>
+                <h6 class="font-semibold mb-1 text-text-primary">Community Driven</h6>
+                <p class="text-text-secondary text-sm">
+                  Over 50,000 readers trust our
+                  recommendations every month.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full lg:w-[calc(50%-1.5rem)]">
+          <div class="about-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="Shopping experience" class="w-full rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER ============ -->
+  <section id="newsletter" class="bg-bg-secondary py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-bg-card border border-border-glass rounded-3xl py-12 px-8 text-center flex flex-col items-center">
+        <svg class="w-12 h-12 text-accent-purple mb-3 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /><path d="M12 16.5c-.8-.8-2-.4-2 .4 0 1.2 1.2 2 2 2.8.8-.8 2-1.6 2-2.8 0-.8-1.2-1.2-1.6-.4z" fill="currentColor" /></svg>
+        <h2 class="text-3xl font-extrabold tracking-tight">Never Miss a Deal</h2>
+        <p class="text-text-secondary mb-4 mx-auto max-w-[480px] mt-2">
+          Subscribe to our weekly newsletter and get the hottest
+          deals and product picks delivered straight to your
+          inbox.
+        </p>
+        <form id="newsletterForm" class="flex justify-center gap-2 flex-wrap w-full">
+          <input type="email" id="newsletterEmail"
+            class="bg-[rgba(255,255,255,0.06)] border border-border-glass rounded-xl text-text-primary py-3 px-4 max-w-[320px] w-full text-sm outline-none transition-all duration-300 focus:bg-[rgba(255,255,255,0.08)] focus:border-accent-purple focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)] placeholder:text-text-secondary"
+            placeholder="Enter your email address" required />
+          <button type="submit" class="btn-glow px-6 flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>Subscribe
+          </button>
+        </form>
+        <div id="newsletterFeedback" class="mt-3"></div>
+        <small class="text-text-secondary mt-2 block">No spam, ever. Unsubscribe anytime.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side script for home page features (reveal animation & newsletter submit) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Newsletter Form Handler
+      const newsletterForm = document.getElementById('newsletterForm');
+      if (newsletterForm) {
+        const feedback = document.getElementById('newsletterFeedback');
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const emailInput = document.getElementById('newsletterEmail') as HTMLInputElement;
+          const email = emailInput.value.trim();
+          
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] text-[#fca5a5]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Please enter a valid email address.</div>`;
+            return;
+          }
+          feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[#86efac]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Thanks for subscribing! Check your inbox.</div>`;
+          emailInput.value = '';
+          setTimeout(() => { feedback.innerHTML = ''; }, 5000);
+        });
+      }
+
+      // IntersectionObserver for card reveal animations
+      const cards = document.querySelectorAll('.reveal-card:not(.revealed)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('revealed'), index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+      
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+</Layout>

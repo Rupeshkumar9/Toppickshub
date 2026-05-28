@@ -1,0 +1,65 @@
+---
+interface Product {
+  id: string;
+  title: string;
+  category: string;
+  thumbnail_image: string;
+  price: number;
+  originalPrice: number;
+  rating: number;
+  reviews: number;
+  badge?: string;
+  badgeClass?: string;
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+// Calculate save percent
+const savePercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+
+// Generate star rating icons
+const fullStars = Math.floor(product.rating);
+const halfStar = product.rating % 1 >= 0.5 ? 1 : 0;
+const emptyStars = 5 - fullStars - halfStar;
+---
+
+<div class="reveal-card">
+  <a href={`/product/${product.id}`} class="block no-underline text-inherit hover:text-inherit">
+    <div class="product-card">
+      {product.badge && (
+        <div class={`product-badge ${product.badgeClass || ''}`}>{product.badge}</div>
+      )}
+      <div class="relative overflow-hidden aspect-[4/3] bg-[linear-gradient(135deg,rgba(139,92,246,0.05),rgba(59,130,246,0.05))] flex items-center justify-center">
+        <img src={product.thumbnail_image} alt={product.title} class="product-img" loading="lazy" />
+      </div>
+      <div class="p-5 flex-1 flex flex-col">
+        <div class="text-[0.7rem] font-semibold uppercase tracking-[1.5px] text-accent-purple mb-1">{product.category}</div>
+        <h5 class="product-title">{product.title}</h5>
+        <div class="text-amber-star text-[0.8rem] mb-3 flex items-center gap-0.5">
+          {Array.from({ length: fullStars }).map(() => (
+            <svg class="w-3.5 h-3.5 inline-block text-amber-500 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+          ))}
+          {halfStar === 1 && (
+            <svg class="w-3.5 h-3.5 inline-block text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /><polygon points="12 2 8.91 8.26 2 9.27 7 14.14 5.82 21.02 12 17.77" fill="currentColor" /></svg>
+          )}
+          {Array.from({ length: emptyStars }).map(() => (
+            <svg class="w-3.5 h-3.5 inline-block text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+          ))}
+          <span class="ml-1 text-text-secondary text-xs">({product.reviews.toLocaleString()})</span>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap mb-4 mt-auto">
+          <span class="text-xl font-extrabold text-text-primary">${product.price.toFixed(2)}</span>
+          <span class="text-sm text-text-secondary line-through">${product.originalPrice.toFixed(2)}</span>
+          <span class="text-[0.7rem] font-bold text-green-save bg-[rgba(34,197,94,0.1)] py-0.5 px-2.5 rounded-full">Save {savePercent}%</span>
+        </div>
+        <span class="btn-amazon w-full text-center py-2.5 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>View Details
+        </span>
+      </div>
+    </div>
+  </a>
+</div>

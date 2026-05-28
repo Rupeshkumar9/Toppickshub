@@ -1,0 +1,481 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = "TopPicksHub — Handpicked Product Recommendations", 
+	description = "Discover top-rated products handpicked for you. Honest reviews, unbeatable deals, and expert recommendations on the best gear and gadgets." 
+} = Astro.props;
+
+// Current year for the footer
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content={description} />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title}</title>
+
+	<!-- Standard favicon link -->
+	<link rel="icon" type="image/png"
+		href="https://e7.pngegg.com/pngimages/168/915/png-clipart-lightning-symbol-icon-art-lightning-symbol-miscellaneous-purple-thumbnail.png">
+
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet" />
+
+
+</head>
+<body>
+	<!-- ============ NAVBAR ============ -->
+	<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50">
+		<div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+			<a class="text-xl font-bold text-text-primary no-underline flex items-center" href="/">
+				<svg class="w-5 h-5 text-accent-purple mr-1.5 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>TopPicksHub
+			</a>
+			<button
+				class="lg:hidden w-10 h-10 flex items-center justify-center border-none bg-[rgba(255,255,255,0.06)] rounded-lg cursor-pointer p-0"
+				type="button" id="navToggle" aria-label="Toggle menu">
+				<span
+					class="block w-[22px] h-[2px] bg-text-primary relative before:content-[''] before:absolute before:w-full before:h-[2px] before:bg-text-primary before:left-0 before:-top-[7px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-text-primary after:left-0 after:top-[7px]"></span>
+			</button>
+			<div class="hidden lg:flex items-center gap-1 flex-1 justify-center" id="navbarContent">
+				<ul class="flex gap-1 list-none p-0 m-0">
+					<li><a class="nav-link" href="/">Home</a></li>
+					<li><a class="nav-link" href="/product">Products</a></li>
+					<li><a class="nav-link" href="/blog">Blog</a></li>
+					<li><a class="nav-link" href="/#about">About</a></li>
+				</ul>
+			</div>
+			<form class="hidden lg:block" role="search" id="searchForm" action="/product" method="GET">
+				<div
+					class="flex items-center px-3 bg-[rgba(255,255,255,0.06)] rounded-xl border border-border-glass overflow-hidden transition-all duration-300 focus-within:border-accent-purple focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]">
+					<svg class="w-4 h-4 text-text-secondary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					<input
+						class="bg-transparent border-none text-text-primary text-sm py-2 px-3 outline-none w-full placeholder:text-text-secondary"
+						type="search" name="search" placeholder="Search products..." aria-label="Search" id="searchInput" />
+				</div>
+			</form>
+		</div>
+		<!-- Mobile menu -->
+		<div class="hidden lg:hidden flex-col gap-2 px-4 pb-4 pt-2" id="mobileMenu">
+			<a class="nav-link" href="/">Home</a>
+			<a class="nav-link" href="/product">Products</a>
+			<a class="nav-link" href="/blog">Blog</a>
+			<a class="nav-link" href="/#about">About</a>
+			<form class="mt-2" role="search" id="searchFormMobile" action="/product" method="GET">
+				<div
+					class="flex items-center px-3 bg-[rgba(255,255,255,0.06)] rounded-xl border border-border-glass overflow-hidden transition-all duration-300 focus-within:border-accent-purple focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]">
+					<svg class="w-4 h-4 text-text-secondary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					<input
+						class="bg-transparent border-none text-text-primary text-sm py-2 px-3 outline-none w-full placeholder:text-text-secondary"
+						type="search" name="search" placeholder="Search products..." aria-label="Search" id="searchInputMobile" />
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<!-- Main Page Content -->
+	<slot />
+
+	<!-- ============ FOOTER ============ -->
+	<footer class="bg-bg-primary border-t border-border-glass py-12">
+		<div class="max-w-7xl mx-auto px-4">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<div class="lg:col-span-1">
+					<h5 class="font-bold mb-3 text-lg text-text-primary flex items-center">
+						<svg class="w-5 h-5 text-accent-purple mr-1.5 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>TopPicksHub
+					</h5>
+					<p class="text-text-secondary text-sm">
+						Your go-to destination for honest product reviews
+						and curated Amazon recommendations. We help you find
+						the best products at the best prices.
+					</p>
+					<div class="flex gap-3 mt-3">
+						<a href="https://in.pinterest.com/priya_nshi9821/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.16 9.4 7.62 11.17-.1-.95-.2-2.41.04-3.45.22-.94 1.4-5.96 1.4-5.96s-.36-.72-.36-1.78c0-1.67.97-2.92 2.18-2.92 1.03 0 1.52.77 1.52 1.69 0 1.03-.66 2.58-.99 4.02-.28 1.2.6 2.18 1.78 2.18 2.14 0 3.78-2.25 3.78-5.5 0-2.88-2.07-4.89-5.02-4.89-3.42 0-5.43 2.57-5.43 5.22 0 1.03.4 2.14.89 2.74.1.12.11.23.08.35-.1.38-.3.1.84.4-.1.4-.04.47-.28.38-2.52-1.17-4.1-4.86-4.1-7.83 0-6.38 4.64-12.24 13.37-12.24 7.02 0 12.48 5 12.48 11.69 0 6.98-4.4 12.6-10.51 12.6-2.05 0-3.98-1.07-4.64-2.33l-1.26 4.83c-.46 1.76-1.7 3.96-2.54 5.31C9.66 23.63 10.81 24 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0z"/></svg></a>
+						<a href="https://amzn.to/4bHpBJi" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Amazon"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm3.3 15.5c-1.3 1-3 1.6-4.8 1.6-2.5 0-4.7-.9-4.7-3.8 0-3 .7-4.1 4.5-4.1.8 0 1.5.1 2.1.2v.9c-.2 1.7-1.2 3.8-2.8 4.8-.5.3-1.1.5-1.5.5-.7 0-1.1-.4-1.1-1.2 0-1.5 1.6-3.3 3.7-3.3.4 0 .8.1 1.1.2v1.3c-.3 0-.5-.1-.8-.1-1.2 0-2.3 1.2-2.3 2.3 0 .4.3.7.7.7.8 0 2-1 2.5-1.9v1.9c.3-.2.7-.4 1-.8v2.2zm4.3 6.6c-2.8 2-7.1 3-10.6 3-4.7 0-8.7-1.8-11.2-4.9-.2-.3 0-.6.3-.4 3.6 2 8.1 3.2 12.8 3.2 3.2 0 6.6-.5 9.3-1.9.4-.2.7.2.3.5z"/></svg></a>
+					</div>
+				</div>
+				<div>
+					<h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Quick Links</h6>
+					<ul class="list-none p-0 space-y-1.5">
+						<li><a href="/product" class="footer-link">Products</a></li>
+						<li><a href="/#products" class="footer-link">Featured</a></li>
+						<li><a href="/#newsletter" class="footer-link">Newsletter</a></li>
+						<li><a href="/#about" class="footer-link">About</a></li>
+					</ul>
+				</div>
+				<div>
+					<h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Support</h6>
+					<ul class="list-none p-0 space-y-1.5">
+						<li><a href="#" class="footer-link" data-modal-target="contactModal">Contact Us</a></li>
+						<li><a href="#" class="footer-link" data-modal-target="faqModal">FAQ</a></li>
+						<li><a href="#" class="footer-link" data-modal-target="privacyModal">Privacy Policy</a></li>
+						<li><a href="#" class="footer-link" data-modal-target="termsModal">Terms of Use</a></li>
+					</ul>
+				</div>
+				<div>
+					<h6 class="text-sm font-bold uppercase tracking-[1px] mb-4 text-text-primary">Affiliate Disclosure</h6>
+					<p class="text-text-secondary text-sm">
+						<svg class="w-4 h-4 mr-1 inline-block align-text-bottom text-text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+						TopPicksHub is a participant in the Amazon Services
+						LLC Associates Program, an affiliate advertising
+						program designed to provide a means for sites to
+						earn advertising fees by advertising and linking to
+						amazon.com. As an Amazon Associate, we earn from
+						qualifying purchases.
+					</p>
+				</div>
+			</div>
+			<hr class="border-border-glass mt-8" />
+			<div class="flex flex-wrap justify-between items-center mt-4">
+				<p id="footer_date" class="text-text-secondary text-sm mb-0">© {year} TopPicksHub. All rights reserved.</p>
+				<p class="text-text-secondary text-sm mb-0 flex items-center gap-1">
+					Managed by Rupes <svg class="w-3.5 h-3.5 text-red-500 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+				</p>
+			</div>
+		</div>
+	</footer>
+
+	<!-- ============ MODALS ============ -->
+
+	<!-- Contact Us Modal -->
+	<div class="modal-overlay" id="contactModal">
+		<div class="modal-dialog">
+			<div class="flex items-center justify-between p-6 pb-2">
+				<h5 class="font-bold text-xl flex items-center">
+					<svg class="w-5 h-5 text-accent-purple mr-2 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>Contact Us
+				</h5>
+				<button type="button"
+					class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+					data-modal-close aria-label="Close">
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</button>
+			</div>
+			<div class="px-6 py-4">
+				<p class="text-text-secondary mb-4">
+					Have a question, suggestion, or partnership inquiry?
+					We'd love to hear from you!
+				</p>
+				<div class="flex items-start gap-3 mb-3">
+					<div
+						class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>
+					</div>
+					<div>
+						<h6 class="font-semibold mb-1 text-text-primary">Email</h6>
+						<p class="text-text-secondary text-sm">Rupeshkumar45670234@gmail.com</p>
+					</div>
+				</div>
+				<div class="flex items-start gap-3 mb-3">
+					<div
+						class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+					</div>
+					<div>
+						<h6 class="font-semibold mb-1 text-text-primary">Response Time</h6>
+						<p class="text-text-secondary text-sm">We typically respond within 24–48 hours on business days.
+						</p>
+					</div>
+				</div>
+				<div class="flex items-start gap-3 mb-3">
+					<div
+						class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+					</div>
+					<div>
+						<h6 class="font-semibold mb-1 text-text-primary">Location</h6>
+						<p class="text-text-secondary text-sm">Based remotely — serving readers worldwide.</p>
+					</div>
+				</div>
+				<div class="flex items-start gap-3">
+					<div
+						class="w-[42px] h-[42px] min-w-[42px] rounded-xl bg-[rgba(139,92,246,0.1)] flex items-center justify-center text-accent-purple">
+						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+					</div>
+					<div>
+						<h6 class="font-semibold mb-1 text-text-primary">Social Media</h6>
+						<p class="text-text-secondary text-sm">Reach out via Pinterest or follow us for updates.</p>
+					</div>
+				</div>
+			</div>
+			<div class="px-6 pb-6 pt-2">
+				<button type="button" class="btn-outline-light px-6 py-2.5" data-modal-close>Close</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- FAQ Modal -->
+	<div class="modal-overlay" id="faqModal">
+		<div class="modal-dialog modal-lg">
+			<div class="flex items-center justify-between p-6 pb-2">
+				<h5 class="font-bold text-xl flex items-center">
+					<svg class="w-5 h-5 text-accent-purple mr-2 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Frequently Asked Questions
+				</h5>
+				<button type="button"
+					class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+					data-modal-close aria-label="Close">
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</button>
+			</div>
+			<div class="px-6 py-4">
+				<div data-accordion="faqAccordion">
+					<div class="accordion-item"><button class="accordion-button active" data-accordion-target="faq1">Are
+							your reviews honest and unbiased?</button>
+						<div id="faq1" class="accordion-collapse show">
+							<div class="accordion-body">Absolutely. We never accept payments or sponsorships to feature
+								any product. Our selections are based on real user reviews, expert analysis, and
+								hands-on testing.</div>
+						</div>
+					</div>
+					<div class="accordion-item"><button class="accordion-button" data-accordion-target="faq2">How do you
+							make money?</button>
+						<div id="faq2" class="accordion-collapse">
+							<div class="accordion-body">We earn a small commission through the Amazon Associates Program
+								when you purchase a product through our affiliate links. This comes at no extra cost to
+								you.</div>
+						</div>
+					</div>
+					<div class="accordion-item"><button class="accordion-button" data-accordion-target="faq3">Do I pay
+							more by using your links?</button>
+						<div id="faq3" class="accordion-collapse">
+							<div class="accordion-body">No! The price you pay on Amazon is exactly the same whether you
+								use our link or go directly. Our commission is paid by Amazon, not by you.</div>
+						</div>
+					</div>
+					<div class="accordion-item"><button class="accordion-button" data-accordion-target="faq4">How often
+							do you add new products?</button>
+						<div id="faq4" class="accordion-collapse">
+							<div class="accordion-body">We add new products regularly as we review them. Subscribe to
+								our newsletter to be the first to know about new picks and deals!</div>
+						</div>
+					</div>
+					<div class="accordion-item"><button class="accordion-button" data-accordion-target="faq5">Can I
+							suggest a product for review?</button>
+						<div id="faq5" class="accordion-collapse">
+							<div class="accordion-body">Of course! We welcome suggestions from our community. Reach out
+								to us via our Contact page and let us know what product you'd like us to review.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="px-6 pb-6 pt-2">
+				<button type="button" class="btn-outline-light px-6 py-2.5" data-modal-close>Close</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Privacy Policy Modal -->
+	<div class="modal-overlay" id="privacyModal">
+		<div class="modal-dialog modal-lg">
+			<div class="flex items-center justify-between p-6 pb-2">
+				<h5 class="font-bold text-xl flex items-center">
+					<svg class="w-5 h-5 text-accent-purple mr-2 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><rect x="9" y="11" width="6" height="4" rx="1"></rect><path d="M10 11V9a2 2 0 0 1 4 0v2"></path></svg>Privacy Policy
+				</h5>
+				<button type="button"
+					class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+					data-modal-close aria-label="Close">
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</button>
+			</div>
+			<div class="px-6 py-4 text-text-secondary">
+				<p><strong class="text-text-primary">Last Updated:</strong> February 2026</p>
+				<h6 class="text-text-primary mt-4 font-semibold">1. Information We Collect</h6>
+				<p class="mt-1">We collect minimal personal information. When you subscribe to our newsletter, we
+					collect your email address. We also use standard analytics tools that may collect anonymous browsing
+					data such as page views, device type, and referral source.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">2. How We Use Your Information</h6>
+				<p class="mt-1">Your email is used solely to send you our newsletter with product recommendations and
+					deals. We never sell, rent, or share your personal information with third parties for marketing
+					purposes.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">3. Cookies</h6>
+				<p class="mt-1">Our site may use cookies for analytics and to improve your browsing experience. Amazon
+					affiliate links may set cookies to track referrals, as part of the Amazon Associates Program.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">4. Third-Party Links</h6>
+				<p class="mt-1">Our site contains links to Amazon.com. When you click these links, you leave our site
+					and are subject to Amazon's privacy policy and terms.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">5. Data Security</h6>
+				<p class="mt-1">We take reasonable measures to protect your information. However, no method of internet
+					transmission is 100% secure, and we cannot guarantee absolute security.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">6. Contact</h6>
+				<p class="mt-1">If you have questions about this Privacy Policy, please contact us at
+					support@toppickshub.com.</p>
+			</div>
+			<div class="px-6 pb-6 pt-2">
+				<button type="button" class="btn-outline-light px-6 py-2.5" data-modal-close>Close</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Terms of Use Modal -->
+	<div class="modal-overlay" id="termsModal">
+		<div class="modal-dialog modal-lg">
+			<div class="flex items-center justify-between p-6 pb-2">
+				<h5 class="font-bold text-xl flex items-center">
+					<svg class="w-5 h-5 text-accent-purple mr-2 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>Terms of Use
+				</h5>
+				<button type="button"
+					class="w-8 h-8 rounded-lg border-none bg-[rgba(255,255,255,0.1)] text-text-secondary text-lg flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] hover:text-text-primary transition-all"
+					data-modal-close aria-label="Close">
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</button>
+			</div>
+			<div class="px-6 py-4 text-text-secondary">
+				<p><strong class="text-text-primary">Last Updated:</strong> February 2026</p>
+				<h6 class="text-text-primary mt-4 font-semibold">1. Acceptance of Terms</h6>
+				<p class="mt-1">By accessing and using TopPicksHub, you agree to be bound by these Terms of Use. If you
+					do not agree, please do not use our website.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">2. Affiliate Disclosure</h6>
+				<p class="mt-1">TopPicksHub is a participant in the Amazon Services LLC Associates Program. We earn
+					commissions from qualifying purchases made through our affiliate links at no additional cost to you.
+				</p>
+				<h6 class="text-text-primary mt-4 font-semibold">3. Content Accuracy</h6>
+				<p class="mt-1">We strive to provide accurate and up-to-date product information, pricing, and reviews.
+					However, prices and availability on Amazon change frequently, and we cannot guarantee real-time
+					accuracy. Always verify on Amazon before purchasing.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">4. Intellectual Property</h6>
+				<p class="mt-1">All content on TopPicksHub, including text, design, and graphics, is our intellectual
+					property and may not be reproduced without permission.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">5. Limitation of Liability</h6>
+				<p class="mt-1">TopPicksHub provides product recommendations for informational purposes only. We are not
+					responsible for any purchases, product defects, or issues arising from transactions on Amazon or
+					other third-party sites.</p>
+				<h6 class="text-text-primary mt-4 font-semibold">6. Changes to Terms</h6>
+				<p class="mt-1">We may update these Terms at any time. Continued use of the site after changes
+					constitutes acceptance of the updated terms.</p>
+			</div>
+			<div class="px-6 pb-6 pt-2">
+				<button type="button" class="btn-outline-light px-6 py-2.5" data-modal-close>Close</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to Top -->
+	<button id="backToTop" class="btn-back-to-top flex items-center justify-center" aria-label="Back to top">
+		<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+	</button>
+
+	<!-- ============ COMMON SCRIPTS ============ -->
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Navbar scroll effect
+			const navbar = document.getElementById('mainNav');
+			const backToTopBtn = document.getElementById('backToTop');
+			
+			function handleScroll() {
+				const scrollY = window.scrollY;
+				if (navbar) {
+					navbar.classList.toggle('scrolled', scrollY > 50);
+				}
+				if (backToTopBtn) {
+					backToTopBtn.classList.toggle('visible', scrollY > 400);
+				}
+			}
+
+			window.addEventListener('scroll', handleScroll, { passive: true });
+			handleScroll(); // Run once initially
+
+			if (backToTopBtn) {
+				backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+			}
+
+			// Mobile Nav Toggle
+			const navToggle = document.getElementById('navToggle');
+			const mobileMenu = document.getElementById('mobileMenu');
+
+			if (navToggle && mobileMenu) {
+				navToggle.addEventListener('click', () => {
+					mobileMenu.classList.toggle('hidden');
+					mobileMenu.classList.toggle('flex');
+				});
+			}
+
+			// Modal Handlers
+			document.querySelectorAll('[data-modal-target]').forEach(trigger => {
+				trigger.addEventListener('click', (e) => {
+					e.preventDefault();
+					const modal = document.getElementById(trigger.getAttribute('data-modal-target'));
+					if (modal) {
+						modal.classList.add('active');
+						document.body.style.overflow = 'hidden';
+					}
+				});
+			});
+
+			document.querySelectorAll('[data-modal-close]').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const modal = btn.closest('.modal-overlay');
+					if (modal) {
+						modal.classList.remove('active');
+						document.body.style.overflow = '';
+					}
+				});
+			});
+
+			document.querySelectorAll('.modal-overlay').forEach(modal => {
+				modal.addEventListener('click', (e) => {
+					if (e.target === modal) {
+						modal.classList.remove('active');
+						document.body.style.overflow = '';
+					}
+				});
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') {
+					const active = document.querySelector('.modal-overlay.active');
+					if (active) {
+						active.classList.remove('active');
+						document.body.style.overflow = '';
+					}
+				}
+			});
+
+			// Accordion Handlers
+			document.querySelectorAll('[data-accordion-target]').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const target = document.getElementById(btn.getAttribute('data-accordion-target'));
+					const accordion = btn.closest('[data-accordion]');
+					if (!target) return;
+
+					if (target.classList.contains('show')) {
+						target.classList.remove('show');
+						btn.classList.remove('active');
+						return;
+					}
+
+					if (accordion) {
+						accordion.querySelectorAll('.accordion-collapse.show').forEach(el => el.classList.remove('show'));
+						accordion.querySelectorAll('.accordion-button.active').forEach(el => el.classList.remove('active'));
+					}
+
+					target.classList.add('show');
+					btn.classList.add('active');
+				});
+			});
+			
+			// Auto active navigation highlight based on current URL path
+			const path = window.location.pathname;
+			const links = document.querySelectorAll('.nav-link');
+			links.forEach(link => {
+				const href = link.getAttribute('href');
+				if (href === path || (path === '/' && href === '/') || (path.startsWith('/product') && href === '/product') || (path.startsWith('/blog') && href === '/blog')) {
+					link.classList.add('active');
+				} else {
+					link.classList.remove('active');
+				}
+			});
+		});
+	</script>
+</body>
+</html>

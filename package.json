@@ -1,6 +1,19 @@
 {
+  "name": "toppickshub",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
+    "astro": "^6.3.8",
     "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0"
   }
 }

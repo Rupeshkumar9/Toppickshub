@@ -1,0 +1,330 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import PRODUCTS from '../../../products.json';
+
+// Generate static HTML pages for all products in the database at build time
+export async function getStaticPaths() {
+  return PRODUCTS.map(product => ({
+    params: { id: product.id },
+    props: { product }
+  }));
+}
+
+const { product } = Astro.props;
+
+// Calculate savings data
+const savePercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+const saveAmount = (product.originalPrice - product.price).toFixed(2);
+
+// Generate star rating icons
+const fullStars = Math.floor(product.rating);
+const halfStar = product.rating % 1 >= 0.5 ? 1 : 0;
+const emptyStars = 5 - fullStars - halfStar;
+
+// Related products: filter out current product and any variations of it
+const variantIds = product.variants ? product.variants.map(v => v.id) : [];
+const relatedProducts = PRODUCTS.filter(p => p.id !== product.id && !variantIds.includes(p.id)).slice(0, 3);
+
+// Helper: detect if a URL is a video
+function isVideoUrl(url: string) {
+  return url.includes('youtube.com/embed/') || url.includes('youtu.be/') ||
+         url.includes('youtube.com/watch') || url.includes('amazon.com/vdp/');
+}
+
+// Helper: convert video URL to embeddable format
+function getVideoEmbedUrl(url: string) {
+  if (url.includes('youtube.com/embed/')) return url;
+  if (url.includes('youtube.com/watch')) {
+    const id = new URL(url).searchParams.get('v');
+    return id ? `https://www.youtube.com/embed/${id}` : url;
+  }
+  if (url.includes('youtu.be/')) {
+    const id = url.split('youtu.be/')[1]?.split('?')[0];
+    return id ? `https://www.youtube.com/embed/${id}` : url;
+  }
+  return url;
+}
+
+// YouTube Thumbnail helper for video items in gallery
+function getYoutubeThumb(url: string) {
+  if (url.includes('youtube.com/embed/')) {
+    const id = url.split('youtube.com/embed/')[1]?.split('?')[0];
+    return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
+  }
+  return '';
+}
+---
+
+<Layout title={`${product.title} Review & Price — TopPicksHub`} description={product.description.substring(0, 155) + '...'}>
+  <!-- ============ PRODUCT DETAIL ============ -->
+  <section class="pt-28 pb-12 min-h-[70vh]">
+    <div class="max-w-7xl mx-auto px-4">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="flex list-none p-0 gap-0 text-sm" id="productBreadcrumb">
+          <li class="flex items-center text-accent-purple">
+            <a href="/" class="text-accent-purple no-underline hover:text-text-primary transition-all duration-300">Home</a>
+          </li>
+          <li class="flex items-center before:content-['/'] before:text-text-secondary before:px-2">
+            <a href={`/product?search=${encodeURIComponent(product.category)}`} class="text-accent-purple no-underline hover:text-text-primary transition-all duration-300">
+              {product.category}
+            </a>
+          </li>
+          <li class="flex items-center text-text-secondary before:content-['/'] before:text-text-secondary before:px-2 truncate max-w-[200px] md:max-w-xs" aria-current="page">
+            {product.title}
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Main Product Content -->
+      <div id="productContent">
+        <div class="flex flex-wrap gap-8 lg:gap-12">
+          <!-- Left side: Media Gallery -->
+          <div class="w-full lg:w-[calc(50%-1.5rem)]">
+            <div class="detail-img-wrapper relative">
+              {product.badge && (
+                <div class={`product-badge ${product.badgeClass || ''}`}>{product.badge}</div>
+              )}
+              
+              <!-- Main media viewport -->
+              <div id="galleryMediaContainer" class="aspect-[4/3] flex items-center justify-center bg-[rgba(255,255,255,0.02)]">
+                {product.Img_Videos && product.Img_Videos.length > 0 ? (
+                  isVideoUrl(product.Img_Videos[0]) ? (
+                    <iframe src={getVideoEmbedUrl(product.Img_Videos[0])} title={product.title} class="gallery-video detail-img w-full h-full" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                  ) : (
+                    <img src={product.Img_Videos[0]} alt={product.title} class="detail-img max-h-[450px] object-contain" id="mainProductImg" />
+                  )
+                ) : (
+                  <img src={product.thumbnail_image} alt={product.title} class="detail-img max-h-[450px] object-contain" id="mainProductImg" />
+                )}
+              </div>
+
+              <!-- Navigation arrows for gallery -->
+              {product.Img_Videos && product.Img_Videos.length > 1 && (
+                <>
+                  <button class="gallery-arrow gallery-arrow-left flex items-center justify-center" id="galleryPrev" aria-label="Previous image">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
+                  <button class="gallery-arrow gallery-arrow-right flex items-center justify-center" id="galleryNext" aria-label="Next image">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                  <div class="gallery-counter" id="galleryCounter">1 / {product.Img_Videos.length}</div>
+                </>
+              )}
+            </div>
+
+            <!-- Thumbnails grid -->
+            {product.Img_Videos && product.Img_Videos.length > 1 && (
+              <div class="gallery-thumbs" id="galleryThumbs">
+                {product.Img_Videos.map((url, index) => {
+                  const isVideo = isVideoUrl(url);
+                  const thumbSrc = isVideo ? getYoutubeThumb(url) : url;
+                  return (
+                    <button class={`gallery-thumb ${index === 0 ? 'active' : ''} relative`} data-media-src={url} data-img-index={index} data-is-video={isVideo}>
+                      {thumbSrc ? <img src={thumbSrc} alt={`${product.title} thumbnail ${index + 1}`} class="w-full h-full object-contain" /> : <div class="gallery-thumb-placeholder flex items-center justify-center"><svg class="w-6 h-6 text-text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"></path><rect width="14" height="12" x="2" y="6" rx="2" ry="2"></rect></svg></div>}
+                      {isVideo && (
+                        <div class="gallery-thumb-play flex items-center justify-center"><svg class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <!-- Right side: Product Data Details -->
+          <div class="w-full lg:w-[calc(50%-1.5rem)] flex flex-col">
+            <span class="text-[0.7rem] font-semibold uppercase tracking-[1.5px] text-accent-purple mb-1">{product.category}</span>
+            <h1 class="text-3xl font-extrabold leading-snug tracking-tight mt-2 mb-2">{product.title}</h1>
+
+            <!-- Variants Selector (Pre-rendered Dynamic links!) -->
+            {product.variants && product.variants.length > 1 && (
+              <div class="border border-border-glass rounded-2xl p-4 bg-bg-card mb-4">
+                <h6 class="font-bold mb-3 flex items-center gap-2"><svg class="w-4.5 h-4.5 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>More Options</h6>
+                <div class="flex flex-wrap gap-3">
+                  {product.variants.map(v => {
+                    const variantProduct = PRODUCTS.find(p => p.id === v.id);
+                    const thumb = variantProduct ? variantProduct.thumbnail_image : '';
+                    const isActive = v.id === product.id ? 'active' : '';
+                    return (
+                      <a href={`/product/${v.id}`} class={`variant-pill no-underline flex items-center gap-2.5 ${isActive}`} title={v.label}>
+                        <img src={thumb} alt={v.label} class="w-10 h-10 rounded-lg object-contain bg-[rgba(255,255,255,0.06)] p-0.5" />
+                        <span class="whitespace-nowrap">{v.label}</span>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <!-- Star Ratings -->
+            <div class="flex items-center gap-2 mb-3">
+              <div class="text-amber-star text-sm flex items-center gap-0.5">
+                {Array.from({ length: fullStars }).map(() => (
+                  <svg class="w-3.5 h-3.5 inline-block text-amber-500 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                ))}
+                {halfStar === 1 && (
+                  <svg class="w-3.5 h-3.5 inline-block text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /><polygon points="12 2 8.91 8.26 2 9.27 7 14.14 5.82 21.02 12 17.77" fill="currentColor" /></svg>
+                )}
+                {Array.from({ length: emptyStars }).map(() => (
+                  <svg class="w-3.5 h-3.5 inline-block text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                ))}
+              </div>
+              <span class="text-text-secondary">{product.rating} out of 5</span>
+              <span class="text-text-secondary">•</span>
+              <span class="text-text-secondary">{product.reviews.toLocaleString()} reviews</span>
+            </div>
+
+            <!-- Price Card -->
+            <div class="bg-bg-card border border-border-glass rounded-2xl p-5 mb-4">
+              <div class="flex items-baseline gap-3 flex-wrap">
+                <span class="text-3xl font-black text-text-primary">${product.price.toFixed(2)}</span>
+                <span class="text-lg text-text-secondary line-through">${product.originalPrice.toFixed(2)}</span>
+              </div>
+              <div class="text-sm font-semibold text-green-save mt-1 flex items-center gap-1">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>You save ${saveAmount} ({savePercent}%)
+              </div>
+            </div>
+
+            <p class="text-text-secondary text-[0.95rem] leading-relaxed mb-4">{product.description}</p>
+
+            <!-- Features list -->
+            <div class="mb-5">
+              <h6 class="font-bold mb-3 flex items-center gap-2"><svg class="w-4.5 h-4.5 text-accent-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>Key Features</h6>
+              <ul class="list-none p-0">
+                {product.features.map(f => (
+                  <li class="flex items-start gap-2 mb-2">
+                    <svg class="w-4 h-4 text-green-500 mt-1 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span class="text-text-secondary text-sm leading-relaxed">{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Call to Actions -->
+            <div class="detail-cta flex flex-wrap gap-3">
+              <a href={product.affiliateLink} class="btn-amazon py-3 px-6 text-base flex-1 flex items-center justify-center gap-2" target="_blank" rel="noopener noreferrer">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>Buy on Amazon
+              </a>
+              <a href="/product" class="btn-outline-light py-3 px-6 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All Products
+              </a>
+            </div>
+
+            <div class="border-t border-border-glass pt-4 mt-4">
+              <div class="flex gap-4 flex-wrap">
+                <div class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 11 11 13 15 9"></polyline></svg><small class="text-text-secondary">Verified Reviews</small></div>
+                <div class="flex items-center gap-2"><svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2" ry="2"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg><small class="text-text-secondary">Free Shipping Eligible</small></div>
+                <div class="flex items-center gap-2"><svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg><small class="text-text-secondary">Easy Returns</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RELATED PRODUCTS ============ -->
+  {relatedProducts.length > 0 && (
+    <section class="bg-bg-secondary py-16 border-t border-border-glass" id="relatedSection">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]">
+            YOU MAY ALSO LIKE
+          </span>
+          <h2 class="text-3xl font-extrabold tracking-tight mt-2">Related Products</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="relatedGrid">
+          {relatedProducts.map(p => (
+            <ProductCard product={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Client-side script for image slider details -->
+  <script is:inline define:vars={{ imgList: product.Img_Videos, productTitle: product.title }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mediaContainer = document.getElementById('galleryMediaContainer');
+      const thumbs = document.querySelectorAll('.gallery-thumb');
+      const galleryCounter = document.getElementById('galleryCounter');
+      const mediaList = imgList && imgList.length > 1 ? imgList : [];
+      let currentImgIndex = 0;
+
+      function isVideoUrl(url) {
+        return url.includes('youtube.com/embed/') || url.includes('youtu.be/') ||
+               url.includes('youtube.com/watch') || url.includes('amazon.com/vdp/');
+      }
+
+      function getVideoEmbedUrl(url) {
+        if (url.includes('youtube.com/embed/')) return url;
+        if (url.includes('youtube.com/watch')) {
+          const id = new URL(url).searchParams.get('v');
+          return id ? `https://www.youtube.com/embed/${id}` : url;
+        }
+        if (url.includes('youtu.be/')) {
+          const id = url.split('youtu.be/')[1]?.split('?')[0];
+          return id ? `https://www.youtube.com/embed/${id}` : url;
+        }
+        return url;
+      }
+
+      function renderMediaElement(url, isMain) {
+        if (isVideoUrl(url)) {
+          const embedUrl = getVideoEmbedUrl(url);
+          return `<iframe src="${embedUrl}" title="${productTitle}" class="gallery-video${isMain ? ' detail-img' : ''} w-full h-full" 
+                   frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+        }
+        return `<img src="${url}" alt="${productTitle}" class="detail-img max-h-[450px] object-contain" id="mainProductImg">`;
+      }
+
+      function navigateToImage(index) {
+        if (!mediaContainer || mediaList.length === 0) return;
+        if (index < 0) index = mediaList.length - 1;
+        if (index >= mediaList.length) index = 0;
+        if (index === currentImgIndex) return;
+
+        currentImgIndex = index;
+        const url = mediaList[index];
+
+        mediaContainer.classList.add('img-fade-out');
+        setTimeout(() => {
+          mediaContainer.innerHTML = renderMediaElement(url, true);
+          mediaContainer.classList.remove('img-fade-out');
+          mediaContainer.classList.add('img-fade-in');
+          setTimeout(() => mediaContainer.classList.remove('img-fade-in'), 300);
+        }, 150);
+
+        thumbs.forEach(t => t.classList.remove('active'));
+        if (thumbs[index]) thumbs[index].classList.add('active');
+        if (galleryCounter) galleryCounter.textContent = `${index + 1} / ${mediaList.length}`;
+      }
+
+      const prevBtn = document.getElementById('galleryPrev');
+      const nextBtn = document.getElementById('galleryNext');
+      if (prevBtn) prevBtn.addEventListener('click', () => navigateToImage(currentImgIndex - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => navigateToImage(currentImgIndex + 1));
+
+      thumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const idx = parseInt(thumb.getAttribute('data-img-index'));
+          navigateToImage(idx);
+        });
+      });
+
+      // IntersectionObserver for reveal card animations on related items
+      const cards = document.querySelectorAll('.reveal-card:not(.revealed)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('revealed'), index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+</Layout>

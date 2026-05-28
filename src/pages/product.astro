@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import PRODUCTS from '../../products.json';
+
+// Pre-sort products by date added (newest first)
+const sortedProducts = [...PRODUCTS].sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
+---
+
+<Layout title="All Products — TopPicksHub" description="Browse our complete collection of reviewed products. Honest reviews, detailed ratings, and Amazon affiliate purchase options.">
+  <!-- ============ PRODUCT COLLECTION ============ -->
+  <section class="pt-28 pb-12 min-h-[70vh]">
+    <div class="max-w-7xl mx-auto px-4">
+      <div id="allProductsListing">
+        <div class="text-center mb-12">
+          <span class="inline-block text-[0.7rem] font-bold tracking-[2px] uppercase text-accent-purple bg-[rgba(139,92,246,0.1)] py-1.5 px-4 rounded-full border border-[rgba(139,92,246,0.2)]" id="listingBadge">
+            ALL PRODUCTS
+          </span>
+          <h2 class="text-3xl font-extrabold tracking-tight mt-2" id="listingHeading">Our Product Collection</h2>
+          <p class="text-text-secondary mx-auto max-w-[550px] mt-2" id="listingDesc">
+            Browse our complete collection of reviewed products, sorted from newest to oldest.
+          </p>
+        </div>
+
+        <!-- Render all products statically for search engines to index -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="allProductsGrid">
+          {sortedProducts.map(p => (
+            <div class="product-item-wrapper" data-id={p.id} data-title={p.title.toLowerCase()} data-category={p.category.toLowerCase()} data-desc={p.description.toLowerCase()} data-features={p.features.join(' ').toLowerCase()}>
+              <ProductCard product={p} />
+            </div>
+          ))}
+          <!-- Fallback No Results UI -->
+          <div id="noResultsUI" class="col-span-full text-center py-12 hidden flex flex-col items-center">
+            <svg class="w-16 h-16 text-text-secondary mb-3 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <h4 class="text-text-secondary text-xl font-semibold">No products found</h4>
+            <p class="text-text-secondary mb-4">We couldn't find any products matching your search.</p>
+            <a href="/product" class="btn-glow px-6 py-3 flex items-center justify-center gap-2 inline-flex"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Browse All Products</a>
+          </div>
+        </div>
+
+        <!-- Pagination UI -->
+        <nav aria-label="Products pagination" class="mt-12" id="paginationContainer">
+          <ul class="flex list-none p-0 gap-1.5 justify-center" id="productsPagination">
+            <!-- Populated client-side -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side script to handle pagination, real-time search, and intersection observer -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const PRODUCTS_PER_PAGE = 9;
+      const params = new URLSearchParams(window.location.search);
+      const searchQuery = params.get('search') ? params.get('search').trim().toLowerCase() : '';
+      const currentPage = parseInt(params.get('page') || '1');
+
+      const productWrappers = document.querySelectorAll('.product-item-wrapper') as NodeListOf<HTMLElement>;
+      const noResultsUI = document.getElementById('noResultsUI');
+      const listingBadge = document.getElementById('listingBadge');
+      const listingHeading = document.getElementById('listingHeading');
+      const listingDesc = document.getElementById('listingDesc');
+      const paginationContainer = document.getElementById('paginationContainer');
+      const paginationEl = document.getElementById('productsPagination');
+
+      // 1. Filter products based on search query
+      let visibleItems: HTMLElement[] = [];
+      
+      productWrappers.forEach(item => {
+        if (!searchQuery) {
+          item.classList.remove('hidden');
+          visibleItems.push(item);
+        } else {
+          const title = item.getAttribute('data-title') || '';
+          const category = item.getAttribute('data-category') || '';
+          const desc = item.getAttribute('data-desc') || '';
+          const features = item.getAttribute('data-features') || '';
+
+          if (title.includes(searchQuery) || category.includes(searchQuery) || desc.includes(searchQuery) || features.includes(searchQuery)) {
+            item.classList.remove('hidden');
+            visibleItems.push(item);
+          } else {
+            item.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update headings for search mode
+      if (searchQuery) {
+        if (listingBadge) listingBadge.textContent = 'SEARCH RESULTS';
+        if (listingHeading) {
+          listingHeading.textContent = visibleItems.length > 0
+            ? `${visibleItems.length} result${visibleItems.length !== 1 ? 's' : ''} for "${params.get('search')}"`
+            : `No results for "${params.get('search')}"`;
+        }
+        if (listingDesc) {
+          listingDesc.textContent = visibleItems.length > 0
+            ? 'Showing products matching your search query.'
+            : 'Try searching for other terms like "skincare", "coffee", or "accessories".';
+        }
+      }
+
+      // 2. Paginate filtered items
+      const totalPages = Math.ceil(visibleItems.length / PRODUCTS_PER_PAGE);
+      const safePage = Math.max(1, Math.min(currentPage, totalPages || 1));
+      const startIndex = (safePage - 1) * PRODUCTS_PER_PAGE;
+      const endIndex = startIndex + PRODUCTS_PER_PAGE;
+
+      // Show/hide based on pagination range
+      visibleItems.forEach((item, index) => {
+        if (index >= startIndex && index < endIndex) {
+          item.classList.remove('hidden');
+          // Trigger reveal animations on show
+          const revealCard = item.querySelector('.reveal-card');
+          if (revealCard) {
+            setTimeout(() => revealCard.classList.add('revealed'), (index - startIndex) * 100);
+          }
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      // Show "No Results" if applicable
+      if (visibleItems.length === 0) {
+        noResultsUI?.classList.remove('hidden');
+        paginationContainer?.classList.add('hidden');
+      } else {
+        noResultsUI?.classList.add('hidden');
+        if (totalPages > 1) {
+          paginationContainer?.classList.remove('hidden');
+          
+          // Build pagination links
+          const paginationBase = searchQuery
+            ? `/product?search=${encodeURIComponent(params.get('search') || '')}&page=`
+            : `/product?page=`;
+
+          let paginationHTML = '';
+          
+          // Prev button
+          paginationHTML += `<li class="page-item ${safePage === 1 ? 'disabled' : ''}">
+            <a class="page-link flex items-center justify-center" href="${safePage === 1 ? '#' : paginationBase + (safePage - 1)}"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></a>
+          </li>`;
+          
+          // Page numbers
+          for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `<li class="page-item ${i === safePage ? 'active' : ''}">
+              <a class="page-link" href="${paginationBase}${i}">${i}</a>
+            </li>`;
+          }
+          
+          // Next button
+          paginationHTML += `<li class="page-item ${safePage === totalPages ? 'disabled' : ''}">
+            <a class="page-link flex items-center justify-center" href="${safePage === totalPages ? '#' : paginationBase + (safePage + 1)}"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+          </li>`;
+          
+          if (paginationEl) paginationEl.innerHTML = paginationHTML;
+        } else {
+          paginationContainer?.classList.add('hidden');
+        }
+      }
+
+      // Synchronize search input values in header
+      const searchInputs = [
+        document.getElementById('searchInput') as HTMLInputElement,
+        document.getElementById('searchInputMobile') as HTMLInputElement
+      ];
+      searchInputs.forEach(input => {
+        if (input && params.get('search')) {
+          input.value = params.get('search') || '';
+        }
+      });
+    });
+  </script>
+</Layout>

@@ -1,0 +1,52 @@
+---
+interface Post {
+  id: string;
+  title: string;
+  excerpt: string;
+  thumbnail_image: string;
+  category: string;
+  date: string;
+  readTime?: string;
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+// Format date nicely
+const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<div class="reveal-card">
+  <a href={`/blog/${post.id}`} class="block no-underline text-inherit hover:text-inherit">
+    <div class="product-card">
+      <div class="relative overflow-hidden aspect-[16/10] bg-[rgba(255,255,255,0.03)] flex items-center justify-center">
+        <img src={post.thumbnail_image} alt={post.title} class="product-img w-full h-full object-cover p-0" loading="lazy" />
+      </div>
+      <div class="p-5 flex-1 flex flex-col">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-[0.7rem] font-bold text-accent-purple bg-[rgba(139,92,246,0.1)] py-1 px-3 rounded-full border border-[rgba(139,92,246,0.2)]">
+            {post.category}
+          </span>
+          <span class="text-xs text-text-secondary">{post.readTime || '3 min read'}</span>
+        </div>
+        <h4 class="text-lg font-bold text-text-primary mb-2 line-clamp-2 hover:text-accent-purple transition-all duration-300">
+          {post.title}
+        </h4>
+        <p class="text-text-secondary text-sm mb-4 line-clamp-3 leading-relaxed">
+          {post.excerpt}
+        </p>
+        <div class="mt-auto pt-3 border-t border-border-glass flex justify-between items-center text-xs text-text-secondary">
+          <span>{formattedDate}</span>
+          <span class="text-accent-purple font-semibold">Read Post <svg class="w-4 h-4 ml-1 inline-block align-text-bottom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
