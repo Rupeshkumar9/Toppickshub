@@ -132,42 +132,17 @@ if (product) {
         </div>
       )}
 
-      <!-- ============ COMMENTS SECTION (Giscus GitHub Integration) ============ -->
-      <section class="mt-16 pt-8 border-t border-border-glass">
+      {/* ============ FUTURE CUSTOM COMMENTS SECTION ============
+      <section class="mt-16 pt-8 border-t border-border-glass" id="comments-section">
         <h4 class="text-xl font-bold mb-6 text-text-primary flex items-center">
           <svg class="w-5 h-5 text-accent-purple mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>Discussion
         </h4>
         
-        <!-- Giscus container -->
-        <div class="giscus"></div>
-
-        <!-- Note to help the user set up their repository details -->
-        <div class="mt-4 p-4 rounded-xl border border-[rgba(59,130,246,0.2)] bg-[rgba(59,130,246,0.06)] text-xs text-text-secondary leading-relaxed flex items-start gap-2">
-          <svg class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <div>
-            <strong>Note:</strong> To enable comments on your live site, replace the repository placeholder details in 
-            <code class="text-text-primary px-1.5 py-0.5 rounded bg-[rgba(255,255,255,0.05)]">src/pages/blog/[id].astro</code> 
-            with your own public GitHub repository settings.
-          </div>
+        <div id="custom-comments-container">
+          <!-- Embed custom comment engine widget script here in the future -->
         </div>
       </section>
+      =========== */}
     </div>
   </article>
-
-  <!-- Giscus script loading -->
-  <script is:inline src="https://giscus.app/client.js"
-          data-repo="Rupeshkumar9/Toppickshub"
-          data-repo-id="R_kgDONo1KxQ"
-          data-category="Announcements"
-          data-category-id="DIC_kwDONo1Kxc4CmIsA"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="dark_dimmed"
-          data-lang="en"
-          crossorigin="anonymous"
-          async>
-  </script>
 </Layout>
