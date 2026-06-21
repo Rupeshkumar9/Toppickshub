@@ -216,39 +216,8 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
       authorInput.value = savedName;
     }
 
-    // High fidelity seed data for Mock Mode (screenshot matched)
-    const seedComments = [
-      {
-        id: 'seed-1',
-        page_id: pageId,
-        author: 'Sarah Johnson',
-        content: 'This was such an insightful post! I especially loved the part about building habits that stick. Can\'t wait to implement these tips.',
-        likes: 24,
-        parent_id: null,
-        created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-        avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80'
-      },
-      {
-        id: 'seed-2',
-        page_id: pageId,
-        author: 'Mark Wilson',
-        content: 'Glad you found it helpful, Sarah! Let me know how it goes.',
-        likes: 8,
-        parent_id: 'seed-1',
-        created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(), // 1 hour ago
-        avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
-      },
-      {
-        id: 'seed-3',
-        page_id: pageId,
-        author: 'Emily Chen',
-        content: 'Great breakdown! The examples really helped clarify the concepts.',
-        likes: 16,
-        parent_id: null,
-        created_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
-        avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80'
-      }
-    ];
+    // Seed data (empty by default)
+    const seedComments = [];
 
     // Helper: format relative time
     function timeAgo(dateString) {
@@ -462,9 +431,6 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
                   <button type="button" class="btn-flag-comment w-full text-left text-xs px-3.5 py-1.5 text-text-secondary hover:text-text-primary hover:bg-[rgba(255,255,255,0.05)] transition-all flex items-center gap-1.5 cursor-pointer">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21v11h-7l-1-1H5a2 2 0 00-2 2zm0 0h18"></path></svg> Flag
                   </button>
-                  <button type="button" class="btn-delete-comment w-full text-left text-xs px-3.5 py-1.5 text-red-400 hover:text-red-300 hover:bg-[rgba(255,255,255,0.05)] transition-all flex items-center gap-1.5 cursor-pointer">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Delete
-                  </button>
                 </div>
               </div>
             </div>
@@ -497,7 +463,6 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
       const dropdownBtn = card.querySelector('.btn-more-options');
       const dropdownMenu = card.querySelector('.dropdown-menu');
       const flagBtn = card.querySelector('.btn-flag-comment');
-      const deleteBtn = card.querySelector('.btn-delete-comment');
       const likeBtn = card.querySelector('.btn-like');
       const replyToggleBtn = card.querySelector('.btn-reply-toggle');
       const replyContainer = card.querySelector('.reply-form-container');
@@ -518,38 +483,6 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
       // Flag Action
       flagBtn.addEventListener('click', () => {
         showNotification('Comment flagged. Thank you for reporting.', 'success');
-      });
-
-      // Delete Action
-      deleteBtn.addEventListener('click', async () => {
-        const confirmDelete = confirm('Are you sure you want to delete this comment?');
-        if (!confirmDelete) return;
-
-        try {
-          if (isSupabase) {
-            // Delete from database
-            const url = `${supabaseUrl}/rest/v1/comments?id=eq.${comment.id}`;
-            const response = await fetch(url, {
-              method: 'DELETE',
-              headers: {
-                'apikey': supabaseKey,
-                'Authorization': `Bearer ${supabaseKey}`
-              }
-            });
-            if (!response.ok) throw new Error('Database deletion failed');
-          }
-
-          // Update local state (works in both Mock Mode and updates UI immediately for Supabase)
-          allComments = allComments.filter(c => c.id !== comment.id && c.parent_id !== comment.id);
-          localStorage.setItem(`comments-${pageId}`, JSON.stringify(allComments));
-          
-          showNotification('Comment deleted successfully.', 'success');
-          buildCommentTree();
-          renderTree();
-        } catch (err) {
-          console.error(err);
-          showNotification('Could not delete comment. Administrators only.', 'error');
-        }
       });
 
       // Like Action (Heart Click)
