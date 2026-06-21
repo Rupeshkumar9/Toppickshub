@@ -91,26 +91,7 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           </button>
-          
-          <!-- Image Button -->
-          <button 
-            type="button" 
-            id="btn-image" 
-            title="Attach Image (Demo only)" 
-            class="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent-purple hover:bg-[rgba(255,255,255,0.05)] transition-all cursor-pointer"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          </button>
 
-          <!-- GIF Button -->
-          <button 
-            type="button" 
-            id="btn-gif" 
-            title="Insert GIF (Demo only)" 
-            class="w-8 h-8 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent-purple hover:bg-[rgba(255,255,255,0.05)] transition-all cursor-pointer"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 10h2v4H7zm6 0v4m0-2h2m4-2v4"></path></svg>
-          </button>
 
           <!-- Simple Emoji Popover -->
           <div id="emoji-popover" class="hidden absolute left-0 bottom-10 bg-bg-secondary border border-border-glass rounded-xl p-2 flex gap-1 z-10 shadow-xl shadow-black/50">
@@ -190,8 +171,6 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
     const postBtn = document.getElementById('btn-post-comment');
     const emojiBtn = document.getElementById('btn-emoji');
     const emojiPopover = document.getElementById('emoji-popover');
-    const imgBtn = document.getElementById('btn-image');
-    const gifBtn = document.getElementById('btn-gif');
     
     const loaderEl = document.getElementById('comments-loader');
     const emptyEl = document.getElementById('comments-empty');
@@ -795,9 +774,7 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
       });
     });
 
-    // Demo feature buttons image/gif
-    imgBtn.addEventListener('click', () => showNotification('Image uploads are disabled in public demo mode.', 'error'));
-    gifBtn.addEventListener('click', () => showNotification('GIF integration is disabled in public demo mode.', 'error'));
+
 
     // Post Main Comment Button Click
     postBtn.addEventListener('click', async () => {
