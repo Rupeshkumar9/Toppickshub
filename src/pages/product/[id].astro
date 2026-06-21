@@ -1,17 +1,19 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import PRODUCTS from '../../../products.json';
+import products from '../../../products.json';
 
 // Generate static HTML pages for all products in the database at build time
 export async function getStaticPaths() {
-  return PRODUCTS.map(product => ({
+  return products.map(product => ({
     params: { id: product.id },
     props: { product }
   }));
 }
 
 const { product } = Astro.props;
+const PRODUCTS = products;
+const allProducts = products;
 
 // Calculate savings data
 const savePercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
@@ -23,8 +25,8 @@ const halfStar = product.rating % 1 >= 0.5 ? 1 : 0;
 const emptyStars = 5 - fullStars - halfStar;
 
 // Related products: filter out current product and any variations of it
-const variantIds = product.variants ? product.variants.map(v => v.id) : [];
-const relatedProducts = PRODUCTS.filter(p => p.id !== product.id && !variantIds.includes(p.id)).slice(0, 3);
+const variantIds = product.variants ? product.variants.map((v: any) => v.id) : [];
+const relatedProducts = allProducts.filter((p: any) => p.id !== product.id && !variantIds.includes(p.id)).slice(0, 3);
 
 // Helper: detect if a URL is a video
 function isVideoUrl(url: string) {
@@ -243,6 +245,8 @@ function getYoutubeThumb(url: string) {
       </div>
     </section>
   )}
+
+
 
   <!-- Client-side script for image slider details -->
   <script is:inline define:vars={{ imgList: product.Img_Videos, productTitle: product.title }}>

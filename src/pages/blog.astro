@@ -1,14 +1,29 @@
 ---
-import path from 'path';
 import Layout from '../layouts/Layout.astro';
 import PostCard from '../components/PostCard.astro';
 
-// Fetch all markdown blog posts
-const posts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true })) as any[];
-const sortedPosts = posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+// Get local posts
+const markdownPosts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true }));
+
+// Format and sort all posts
+const posts = markdownPosts.map((post: any) => {
+  const filename = post.file.split(/[/\\]/).pop() || '';
+  const id = filename.replace(/\.md$/, '');
+  return {
+    id,
+    title: post.frontmatter.title,
+    excerpt: post.frontmatter.excerpt,
+    date: post.frontmatter.date,
+    category: post.frontmatter.category,
+    readTime: post.frontmatter.readTime,
+    thumbnail_image: post.frontmatter.thumbnail_image,
+  };
+});
+
+const sortedPosts = posts.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 // Extract unique categories for filtering tabs
-const categories = ['All', ...new Set(posts.map(p => p.frontmatter.category))];
+const categories = ['All', ...new Set(posts.map((p: any) => p.category))];
 ---
 
 <Layout title="Articles & Buying Guides — TopPicksHub" description="Read our expert buying guides, product roundups, and shopping tips to find the best gadgets, gear, and everyday essentials on Amazon.">
@@ -38,22 +53,11 @@ const categories = ['All', ...new Set(posts.map(p => p.frontmatter.category))];
 
       <!-- Blog Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogGrid">
-        {sortedPosts.map(post => {
-          const id = path.basename(post.file, '.md');
-          return (
-            <div class="blog-item-wrapper" data-category={post.frontmatter.category}>
-              <PostCard post={{
-                id,
-                title: post.frontmatter.title,
-                excerpt: post.frontmatter.excerpt,
-                thumbnail_image: post.frontmatter.thumbnail_image,
-                category: post.frontmatter.category,
-                date: post.frontmatter.date,
-                readTime: post.frontmatter.readTime
-              }} />
-            </div>
-          );
-        })}
+        {sortedPosts.map(post => (
+          <div class="blog-item-wrapper" data-category={post.category}>
+            <PostCard post={post} />
+          </div>
+        ))}
       </div>
     </div>
   </section>

@@ -1,19 +1,35 @@
 ---
-import path from 'path';
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import PostCard from '../components/PostCard.astro';
 import HeroParticles from '../components/HeroParticles.astro';
-import PRODUCTS from '../../products.json';
+import productsData from '../../products.json';
 
-// Fetch blog posts
-const posts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true })) as any[];
-const sortedPosts = posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
-const latestPosts = sortedPosts.slice(0, 3);
+// Get local posts
+const markdownPosts = Object.values(import.meta.glob('../content/blog/*.md', { eager: true }));
 
-// Sort products by date added (newest first) and take top 6
-const sortedProducts = [...PRODUCTS].sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
-const featuredProducts = sortedProducts.slice(0, 6);
+// Format and sort latest blog posts
+const latestPosts = markdownPosts
+  .map((post: any) => {
+    const filename = post.file.split(/[/\\]/).pop() || '';
+    const id = filename.replace(/\.md$/, '');
+    return {
+      id,
+      title: post.frontmatter.title,
+      excerpt: post.frontmatter.excerpt,
+      date: post.frontmatter.date,
+      category: post.frontmatter.category,
+      readTime: post.frontmatter.readTime,
+      thumbnail_image: post.frontmatter.thumbnail_image,
+    };
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .slice(0, 3);
+
+// Format and sort featured products (newest first)
+const featuredProducts = [...productsData]
+  .sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
+  .slice(0, 6);
 
 // Current month/year for the trending badge
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -50,9 +66,9 @@ const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMon
         </div>
         <div class="w-full lg:w-5/12 hidden lg:block text-center">
           <div id="hero_image" class="relative">
-            {PRODUCTS.length > 0 && (
-              <a href={PRODUCTS[0].affiliateLink} target="_blank" rel="noopener noreferrer">
-                <img src={PRODUCTS[0].thumbnail_image} alt={PRODUCTS[0].title} class="hero-floating-img max-w-full" />
+            {featuredProducts.length > 0 && (
+              <a href={featuredProducts[0].affiliateLink} target="_blank" rel="noopener noreferrer">
+                <img src={featuredProducts[0].thumbnail_image} alt={featuredProducts[0].title} class="hero-floating-img max-w-full" />
               </a>
             )}
           </div>
@@ -95,20 +111,9 @@ const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMon
         </p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {latestPosts.map(post => {
-          const id = path.basename(post.file, '.md');
-          return (
-            <PostCard post={{
-              id,
-              title: post.frontmatter.title,
-              excerpt: post.frontmatter.excerpt,
-              thumbnail_image: post.frontmatter.thumbnail_image,
-              category: post.frontmatter.category,
-              date: post.frontmatter.date,
-              readTime: post.frontmatter.readTime
-            }} />
-          );
-        })}
+        {latestPosts.map(post => (
+          <PostCard post={post} />
+        ))}
       </div>
       <div class="text-center mt-10">
         <a href="/blog" class="btn-outline-light py-2.5 px-6 flex items-center justify-center gap-2 inline-flex">
@@ -212,22 +217,49 @@ const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMon
   <!-- Client-side script for home page features (reveal animation & newsletter submit) -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Newsletter Form Handler
+      // Newsletter Form Handler — Submits to MailerLite
       const newsletterForm = document.getElementById('newsletterForm');
       if (newsletterForm) {
-        const feedback = document.getElementById('newsletterFeedback');
-        newsletterForm.addEventListener('submit', (e) => {
+        const feedback = document.getElementById('newsletterFeedback')!;
+        const emailInput = document.getElementById('newsletterEmail') as HTMLInputElement;
+        const submitBtn = newsletterForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const originalBtnHTML = submitBtn.innerHTML;
+
+        newsletterForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          const emailInput = document.getElementById('newsletterEmail') as HTMLInputElement;
           const email = emailInput.value.trim();
           
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] text-[#fca5a5]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Please enter a valid email address.</div>`;
             return;
           }
-          feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[#86efac]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Thanks for subscribing! Check your inbox.</div>`;
-          emailInput.value = '';
-          setTimeout(() => { feedback.innerHTML = ''; }, 5000);
+
+          // Show loading state
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg>Subscribing...`;
+
+          try {
+            // POST to MailerLite embedded form endpoint
+            // Replace YOUR_MAILERLITE_FORM_URL with the form action URL from your MailerLite dashboard or env variable
+            const mailerliteUrl = import.meta.env.PUBLIC_MAILERLITE_FORM_URL || 'YOUR_MAILERLITE_FORM_URL';
+            const formData = new FormData();
+            formData.append('fields[email]', email);
+
+            await fetch(mailerliteUrl, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+
+            feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[#86efac]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Thanks for subscribing! You'll hear from us soon.</div>`;
+            emailInput.value = '';
+          } catch (err) {
+            feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] text-[#fca5a5]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg> Something went wrong. Please try again later.</div>`;
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHTML;
+            setTimeout(() => { feedback.innerHTML = ''; }, 6000);
+          }
         });
       }
 

@@ -1,26 +1,26 @@
 ---
-import path from 'path';
 import Layout from '../../layouts/Layout.astro';
-import PRODUCTS from '../../../products.json';
+import CommentsSection from '../../components/CommentsSection.astro';
+import products from '../../../products.json';
 
 // Generate static HTML pages for all markdown blog posts at build time
 export async function getStaticPaths() {
-  const posts = import.meta.glob('../../content/blog/*.md', { eager: true });
-  return Object.values(posts).map((post: any) => {
-    const id = path.basename(post.file, '.md');
+  const markdownPosts = Object.values(import.meta.glob('../../content/blog/*.md', { eager: true }));
+
+  return markdownPosts.map((post: any) => {
+    const filename = post.file.split(/[/\\]/).pop() || '';
+    const id = filename.replace(/\.md$/, '');
+    const product = products.find(p => p.id === post.frontmatter.relatedProductId);
     return {
       params: { id },
-      props: { post }
+      props: { post, product }
     };
   });
 }
 
-const { post } = Astro.props;
-const { Content } = post; // Compiled Markdown content component
-const { title, excerpt, date, category, thumbnail_image, relatedProductId, readTime } = post.frontmatter;
-
-// Fetch related product database entry
-const product = PRODUCTS.find(p => p.id === relatedProductId);
+const { post, product } = Astro.props;
+const { Content } = post;
+const { title, excerpt, date, category, thumbnail_image, readTime } = post.frontmatter;
 
 // Format date nicely
 const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -82,7 +82,7 @@ if (product) {
         <img src={thumbnail_image} alt={title} class="w-full h-full object-cover p-0" />
       </div>
 
-      <!-- Article Body (Markdown compiled contents) -->
+      <!-- Article Body (Markdown Content) -->
       <div class="prose prose-invert max-w-none text-text-secondary leading-relaxed text-[1.05rem] space-y-6 border-b border-border-glass pb-10">
         <Content />
       </div>
@@ -132,17 +132,12 @@ if (product) {
         </div>
       )}
 
-      {/* ============ FUTURE CUSTOM COMMENTS SECTION ============
-      <section class="mt-16 pt-8 border-t border-border-glass" id="comments-section">
-        <h4 class="text-xl font-bold mb-6 text-text-primary flex items-center">
-          <svg class="w-5 h-5 text-accent-purple mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>Discussion
-        </h4>
-        
-        <div id="custom-comments-container">
-          <!-- Embed custom comment engine widget script here in the future -->
-        </div>
-      </section>
-      =========== */}
+      {/* ============ COMMENTS SECTION ============ */}
+      <CommentsSection
+        pageId={`blog-${Astro.params.id}`}
+        pageUrl={`/blog/${Astro.params.id}`}
+        pageTitle={title}
+      />
     </div>
   </article>
 </Layout>
