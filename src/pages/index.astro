@@ -204,6 +204,7 @@ const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMon
           <input type="email" id="newsletterEmail"
             class="bg-[rgba(255,255,255,0.06)] border border-border-glass rounded-xl text-text-primary py-3 px-4 max-w-[320px] w-full text-sm outline-none transition-all duration-300 focus:bg-[rgba(255,255,255,0.08)] focus:border-accent-purple focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)] placeholder:text-text-secondary"
             placeholder="Enter your email address" required />
+          <input type="text" id="newsletterWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute -left-[9999px]" />
           <button type="submit" class="btn-glow px-6 flex items-center justify-center gap-2">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>Subscribe
           </button>
@@ -239,26 +240,29 @@ const trendingBadgeText = `🔥 Trending Picks - ${monthNames[currentDate.getMon
           submitBtn.innerHTML = `<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg>Subscribing...`;
 
           try {
-            // POST to MailerLite embedded form endpoint
-            // Replace YOUR_MAILERLITE_FORM_URL with the form action URL from your MailerLite dashboard or env variable
-            const mailerliteUrl = import.meta.env.PUBLIC_MAILERLITE_FORM_URL || 'YOUR_MAILERLITE_FORM_URL';
-            const formData = new FormData();
-            formData.append('fields[email]', email);
-
-            await fetch(mailerliteUrl, {
+            const websiteInput = document.getElementById('newsletterWebsite') as HTMLInputElement;
+            const response = await fetch('/api/newsletter', {
               method: 'POST',
-              body: formData,
-              mode: 'no-cors'
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, website: websiteInput.value })
             });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.error || 'Subscription failed.');
 
-            feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[#86efac]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Thanks for subscribing! You'll hear from us soon.</div>`;
+            feedback.textContent = `Thanks for subscribing! You'll hear from us soon.`;
+            feedback.className = 'mt-3 rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[#86efac]';
             emailInput.value = '';
           } catch (err) {
-            feedback.innerHTML = `<div class="rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 inline-flex items-center gap-2 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] text-[#fca5a5]"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg> Something went wrong. Please try again later.</div>`;
+            const message = err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
+            feedback.textContent = message;
+            feedback.className = 'mt-3 rounded-xl text-sm max-w-[400px] mx-auto py-2 px-3 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] text-[#fca5a5]';
           } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnHTML;
-            setTimeout(() => { feedback.innerHTML = ''; }, 6000);
+            setTimeout(() => {
+              feedback.textContent = '';
+              feedback.className = 'mt-3';
+            }, 6000);
           }
         });
       }

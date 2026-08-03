@@ -6,6 +6,7 @@ dist/
 
 # Astro cache and build files
 .astro/
+.vercel/
 
 # local env files
 .env

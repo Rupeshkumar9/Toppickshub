@@ -404,7 +404,8 @@ const year = new Date().getFullYear();
 			document.querySelectorAll('[data-modal-target]').forEach(trigger => {
 				trigger.addEventListener('click', (e) => {
 					e.preventDefault();
-					const modal = document.getElementById(trigger.getAttribute('data-modal-target'));
+					const targetId = trigger.getAttribute('data-modal-target');
+					const modal = targetId ? document.getElementById(targetId) : null;
 					if (modal) {
 						modal.classList.add('active');
 						document.body.style.overflow = 'hidden';
@@ -444,7 +445,8 @@ const year = new Date().getFullYear();
 			// Accordion Handlers
 			document.querySelectorAll('[data-accordion-target]').forEach(btn => {
 				btn.addEventListener('click', () => {
-					const target = document.getElementById(btn.getAttribute('data-accordion-target'));
+					const targetId = btn.getAttribute('data-accordion-target');
+					const target = targetId ? document.getElementById(targetId) : null;
 					const accordion = btn.closest('[data-accordion]');
 					if (!target) return;
 

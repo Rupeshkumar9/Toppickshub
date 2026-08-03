@@ -53,7 +53,7 @@ const sortedProducts = [...PRODUCTS].sort((a, b) => new Date(b.dateAdded).getTim
     document.addEventListener('DOMContentLoaded', () => {
       const PRODUCTS_PER_PAGE = 9;
       const params = new URLSearchParams(window.location.search);
-      const searchQuery = params.get('search') ? params.get('search').trim().toLowerCase() : '';
+      const searchQuery = params.get('search')?.trim().toLowerCase() ?? '';
       const currentPage = parseInt(params.get('page') || '1');
 
       const productWrappers = document.querySelectorAll('.product-item-wrapper') as NodeListOf<HTMLElement>;

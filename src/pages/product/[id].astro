@@ -93,7 +93,7 @@ function getYoutubeThumb(url: string) {
               <div id="galleryMediaContainer" class="aspect-[4/3] flex items-center justify-center bg-[rgba(255,255,255,0.02)]">
                 {product.Img_Videos && product.Img_Videos.length > 0 ? (
                   isVideoUrl(product.Img_Videos[0]) ? (
-                    <iframe src={getVideoEmbedUrl(product.Img_Videos[0])} title={product.title} class="gallery-video detail-img w-full h-full" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    <iframe src={getVideoEmbedUrl(product.Img_Videos[0])} title={product.title} class="gallery-video detail-img w-full h-full border-0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                   ) : (
                     <img src={product.Img_Videos[0]} alt={product.title} class="detail-img max-h-[450px] object-contain" id="mainProductImg" />
                   )
