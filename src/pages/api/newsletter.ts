@@ -22,13 +22,38 @@ export const POST: APIRoute = async ({ request }) => {
     if (!payload.success) return json({ error: 'Please enter a valid email address.' }, { status: 400 });
     if (payload.data.website) return json({ ok: true });
 
-    const mailerLiteUrl = import.meta.env.MAILERLITE_FORM_URL;
-    if (!mailerLiteUrl) throw new Error('MAILERLITE_FORM_URL is not configured.');
+    const senderApiToken = import.meta.env.SENDER_API_TOKEN;
+    const senderGroupId = import.meta.env.SENDER_GROUP_ID;
+    if (!senderApiToken || !senderGroupId) {
+      throw new Error('Sender API credentials are not configured.');
+    }
 
-    const formData = new FormData();
-    formData.append('fields[email]', payload.data.email);
-    const response = await fetch(mailerLiteUrl, { method: 'POST', body: formData, redirect: 'follow' });
-    if (!response.ok) throw new Error(`MailerLite returned ${response.status}.`);
+    const response = await fetch('https://api.sender.net/v2/subscribers', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${senderApiToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        email: payload.data.email,
+        groups: [senderGroupId],
+        trigger_automation: true,
+      }),
+    });
+
+    if (!response.ok) {
+      const senderError = await response.json().catch(() => null);
+      console.error('Sender subscription failed.', {
+        status: response.status,
+        message: senderError?.message,
+        errors: senderError?.errors,
+      });
+      if (response.status === 429) {
+        return json({ error: 'The newsletter service is busy. Please try again shortly.' }, { status: 503 });
+      }
+      throw new Error(`Sender returned ${response.status}.`);
+    }
 
     return json({ ok: true }, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
